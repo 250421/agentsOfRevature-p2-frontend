@@ -30,6 +30,7 @@
     "zod": "^3.24.4"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/postcss": "^4.1.5",
     "@tanstack/router-plugin": "^1.114.3",
     "@testing-library/dom": "^10.4.0",
