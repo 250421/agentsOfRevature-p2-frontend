@@ -1,15 +1,24 @@
-import { Outlet, createRootRoute } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-
-import Header from '../components/Header'
+import { createRootRoute, Outlet } from '@tanstack/react-router'
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+import { Toaster } from 'sonner';
 
 export const Route = createRootRoute({
-  component: () => (
-    <>
-      <Header />
-
-      <Outlet />
-      <TanStackRouterDevtools />
-    </>
-  ),
+  component: () => <Outlet />,
 })
+
+const RootLayout = () => {
+  // Create a client
+  const queryClient = new QueryClient()
+  
+  return (
+    <div>
+      <QueryClientProvider client={queryClient}>
+        <Outlet />
+        <Toaster />
+      </QueryClientProvider>
+    </div>
+  )
+};
