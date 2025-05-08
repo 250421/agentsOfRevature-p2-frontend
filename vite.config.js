@@ -17,9 +17,8 @@ export default defineConfig({
       // generatedRouteTree: "./src/routeTree.gen.ts",
     }),
 
-    // 2) React + Tailwind
+    // 2) React
     viteReact(),
-    tailwindcss(),
   ],
 
   resolve: {
