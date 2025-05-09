@@ -10,12 +10,21 @@ import {
 } from "@/components/ui/card";
 import type { Calamity } from "./CalamityContainer";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 
 export function CalamityCard({ location, severity, description }: Calamity) {
   return (
     <div className="min-w-min">
-      <Card>
+      <Card className={cn(
+                  "border-5",
+                  {
+                      "border-l-purple-700": severity === "critical",
+                      "border-l-red-600": severity === "high",
+                      "border-l-orange-400": severity === "medium",
+                      "border-l-yellow-400": severity === "low",
+                  }
+                  )}>
         <CardHeader className="flex flex-row items-center">
           <CardTitle className="mr-auto">Card Title</CardTitle>
           <p>Reported: 15m ago</p>
