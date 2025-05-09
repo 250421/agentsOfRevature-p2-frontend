@@ -15,6 +15,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as publicSignUpImport } from './routes/(public)/sign-up'
 import { Route as publicSignInImport } from './routes/(public)/sign-in'
+import { Route as publicHomeImport } from './routes/(public)/home'
 import { Route as publicLayoutImport } from './routes/(public)/_layout'
 
 // Create Virtual Routes
@@ -37,6 +38,12 @@ const publicSignUpRoute = publicSignUpImport.update({
 const publicSignInRoute = publicSignInImport.update({
   id: '/sign-in',
   path: '/sign-in',
+  getParentRoute: () => publicRoute,
+} as any)
+
+const publicHomeRoute = publicHomeImport.update({
+  id: '/home',
+  path: '/home',
   getParentRoute: () => publicRoute,
 } as any)
 
@@ -63,6 +70,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof publicLayoutImport
       parentRoute: typeof publicRoute
     }
+    '/(public)/home': {
+      id: '/(public)/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof publicHomeImport
+      parentRoute: typeof publicImport
+    }
     '/(public)/sign-in': {
       id: '/(public)/sign-in'
       path: '/sign-in'
@@ -84,12 +98,14 @@ declare module '@tanstack/react-router' {
 
 interface publicRouteChildren {
   publicLayoutRoute: typeof publicLayoutRoute
+  publicHomeRoute: typeof publicHomeRoute
   publicSignInRoute: typeof publicSignInRoute
   publicSignUpRoute: typeof publicSignUpRoute
 }
 
 const publicRouteChildren: publicRouteChildren = {
   publicLayoutRoute: publicLayoutRoute,
+  publicHomeRoute: publicHomeRoute,
   publicSignInRoute: publicSignInRoute,
   publicSignUpRoute: publicSignUpRoute,
 }
@@ -99,12 +115,14 @@ const publicRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '/': typeof publicLayoutRoute
+  '/home': typeof publicHomeRoute
   '/sign-in': typeof publicSignInRoute
   '/sign-up': typeof publicSignUpRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof publicLayoutRoute
+  '/home': typeof publicHomeRoute
   '/sign-in': typeof publicSignInRoute
   '/sign-up': typeof publicSignUpRoute
 }
@@ -113,19 +131,21 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/(public)': typeof publicRouteWithChildren
   '/(public)/_layout': typeof publicLayoutRoute
+  '/(public)/home': typeof publicHomeRoute
   '/(public)/sign-in': typeof publicSignInRoute
   '/(public)/sign-up': typeof publicSignUpRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-in' | '/sign-up'
+  fullPaths: '/' | '/home' | '/sign-in' | '/sign-up'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sign-in' | '/sign-up'
+  to: '/' | '/home' | '/sign-in' | '/sign-up'
   id:
     | '__root__'
     | '/(public)'
     | '/(public)/_layout'
+    | '/(public)/home'
     | '/(public)/sign-in'
     | '/(public)/sign-up'
   fileRoutesById: FileRoutesById
@@ -156,12 +176,17 @@ export const routeTree = rootRoute
       "filePath": "(public)",
       "children": [
         "/(public)/_layout",
+        "/(public)/home",
         "/(public)/sign-in",
         "/(public)/sign-up"
       ]
     },
     "/(public)/_layout": {
       "filePath": "(public)/_layout.tsx",
+      "parent": "/(public)"
+    },
+    "/(public)/home": {
+      "filePath": "(public)/home.tsx",
       "parent": "/(public)"
     },
     "/(public)/sign-in": {
