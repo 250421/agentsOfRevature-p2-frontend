@@ -31,7 +31,7 @@ function SignInPage() {
     const form = useForm<SignInSchemaType>({
         resolver: zodResolver(signinSchema),
         defaultValues: {
-            email: "",
+            username: "",
             password: "",
         },
     });
@@ -51,12 +51,12 @@ function SignInPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-6">
             <FormField
                 control={form.control}
-                name="email"
+                name="username"
                 render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Username</FormLabel>
                     <FormControl>
-                    <Input placeholder="Email" {...field} />
+                    <Input placeholder="Username" {...field} />
                     </FormControl>
                     <FormMessage />
                 </FormItem>
