@@ -1,5 +1,8 @@
 import type { SeverityLevel } from "./SeverityBadge";
 import { CalamityCard } from "./CalamityCard";
+import { useMemo, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { StepBack, StepForward } from "lucide-react";
 
 export interface Calamity {
   location: string;
@@ -77,14 +80,40 @@ const calamities: Calamity[] = [
 ];
 
 export function CalamityContainer() {
+  const [currentPage, setCurrentPage] = useState(0);
+  const totalPages = Math.ceil(calamities.length / 3);
+  const displayedCalamities = useMemo(() => {
+    const start = currentPage * 3;
+    const end = start + 3;
+    return calamities.slice(start, end);
+  }, [currentPage]);
+
+  const handlePrevPage = () => {
+    setCurrentPage(Math.max(currentPage - 1, 0));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(Math.min(currentPage + 1, totalPages - 1));
+  };
+
   return (
     <>
+      <div className="text-right pt-5 pr-10">
+        {calamities.length} active calamities
+      </div>
+
+      <div className="flex justify-center items-center">
+        <Button variant="outline" onClick={handlePrevPage}>
+          <StepBack />
+        </Button>
+        <Button variant="outline" onClick={handleNextPage}>
+          <StepForward />
+        </Button>
+      </div>
+
       <div className="pt-5 px-8">
-        <div className="text-right pb-5 pr-2">
-          {calamities.length} active calamities
-        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {calamities.map((calamity: Calamity) => (
+          {displayedCalamities.map((calamity: Calamity) => (
             <CalamityCard key={calamity.location} {...calamity} />
           ))}
         </div>
