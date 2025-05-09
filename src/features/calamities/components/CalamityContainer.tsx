@@ -103,10 +103,10 @@ export function CalamityContainer() {
       </div>
 
       <div className="flex justify-center items-center">
-        <Button variant="outline" onClick={handlePrevPage}>
+        <Button variant="outline" onClick={handlePrevPage} disabled={currentPage === 0}>
           <StepBack />
         </Button>
-        <Button variant="outline" onClick={handleNextPage}>
+        <Button variant="outline" onClick={handleNextPage} disabled={currentPage === totalPages - 1}>
           <StepForward />
         </Button>
       </div>
