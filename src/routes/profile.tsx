@@ -35,8 +35,6 @@ function ProfilePage() {
             <dl className="grid grid-cols-1 gap-2">
                 <dt>Display Name</dt>
                 <dd>Jane Doe</dd>
-                <dt>Email</dt>
-                <dd>test@email.com</dd>
                 <dt>Prestige Points</dt>
                 <dd>#</dd>
             </dl>
