@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 
 export function CalamityCard({ location, severity, description }: Calamity) {
   return (
-    <div>
+    <div className="min-w-min">
       <Card>
         <CardHeader className="flex flex-row items-center">
           <CardTitle className="mr-auto">Card Title</CardTitle>
