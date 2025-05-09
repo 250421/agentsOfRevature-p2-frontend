@@ -27,35 +27,57 @@ function ProfilePage() {
 
   return (
     <>
-    <Card className="flex justify-center items-center w-1/2">
+    <div className="min-h-screen bg-gray-50 py-8 flex flex-col items-center gap-6 px-4">
+    <Card className="w-1/2">
         <CardHeader>
             <CardTitle>Your Profile</CardTitle>
         </CardHeader>
         <CardContent>
             <dl className="grid grid-cols-1 gap-2">
                 <dt>Display Name</dt>
-                <dd>Jane Doe</dd>
+                <dd>{user.username}</dd>
                 <dt>Prestige Points</dt>
                 <dd>#</dd>
             </dl>
         </CardContent>
     </Card>
-    <Card className="flex justify-center items-center w-1/2">
+    <Card className="w-1/2">
         <CardHeader>
-            <CardTitle>Your Profile</CardTitle>
+            <CardTitle>Your Favorite Heroes</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col md:flex-row gap-6 text-center px-4 py-2">
+            <Card className="w-max whitespace-nowrap text-center px-4 py-2">
+                <CardHeader><CardTitle>Hero 1</CardTitle></CardHeader>
+                <CardContent><p>Statistics</p></CardContent>
+            </Card>
+            <Card className="w-max whitespace-nowrap text-center px-4 py-2">
+                <CardHeader><CardTitle>Hero 2</CardTitle></CardHeader>
+                <CardContent><p>Statistics</p></CardContent>
+            </Card>
+            <Card className="w-max whitespace-nowrap text-center px-4 py-2">
+                <CardHeader><CardTitle>Hero 3</CardTitle></CardHeader>
+                <CardContent><p>Statistics</p></CardContent>
+            </Card>
+        </CardContent>
+    </Card>
+    <Card className="w-1/2">
+        <CardHeader>
+            <CardTitle>Game Stats</CardTitle>
         </CardHeader>
         <CardContent>
             <dl className="grid grid-cols-1 gap-2">
                 <dt>Calamities Resolved</dt>
                 <dd>#</dd>
+                <dt>Calamities Resolved</dt>
+                <dd>#</dd>
                 <dt>Calamaties Failed</dt>
                 <dd>#</dd>
-                <dt>Calamity Restoration Rate</dt>
+                <dt>Calamity Resolution Rate</dt>
                 <dd>%</dd>
             </dl>
         </CardContent>
     </Card>
-    
+    </div>
     </>
   )
 }
