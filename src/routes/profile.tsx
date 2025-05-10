@@ -8,6 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 
 export const Route = createFileRoute('/profile')({
   component: ProfilePage,
@@ -39,6 +40,7 @@ function ProfilePage() {
                 <dt>Prestige Points</dt>
                 <dd>#</dd>
             </dl>
+            <Button variant="outline" className="bg-red-500 text-gray-50">Logout</Button>
         </CardContent>
     </Card>
     <Card className="w-1/2">
