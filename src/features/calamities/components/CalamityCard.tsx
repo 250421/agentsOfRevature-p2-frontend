@@ -8,6 +8,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+
 import type { Calamity } from "./CalamityContainer";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
