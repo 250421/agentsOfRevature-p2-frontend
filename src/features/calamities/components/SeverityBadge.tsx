@@ -1,13 +1,13 @@
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
+import type { SeverityLevel } from "../models/data"
 
-export type SeverityLevel = "critical" | "high" | "medium" | "low"
 
 interface SeverityBadgeProps {
     severity: SeverityLevel
 }
 
-export function SeverityBadge ({ severity }: SeverityBadgeProps) {
+export function SeverityBadge({ severity }: SeverityBadgeProps) {
     return (
         <Badge className={cn(
             "",
