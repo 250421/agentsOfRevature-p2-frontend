@@ -3,6 +3,8 @@ import { CalamityCard } from "./CalamityCard";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { StepBack, StepForward } from "lucide-react";
+import { usePagination } from "@/hooks/usePagination";
+import { PaginationControls } from "@/components/shared/PaginationControls";
 
 export interface Calamity {
   location: string;
@@ -78,37 +80,21 @@ const calamities: Calamity[] = [
       "Dormammu is attempting to breach the dimensional barriers, causing reality to warp around Greenwich Village; floating teacups and talking pigeons are just the beginning.",
   },
 ];
+const ITEMS_PER_PAGE = 3;
 
 export function CalamityContainer() {
-  const [currentPage, setCurrentPage] = useState(0);
-  const totalPages = Math.ceil(calamities.length / 3);
-  const displayedCalamities = useMemo(() => {
-    const start = currentPage * 3;
-    const end = start + 3;
-    return calamities.slice(start, end);
-  }, [currentPage]);
-
-  const handlePrevPage = () => {
-    setCurrentPage(Math.max(currentPage - 1, 0));
-  };
-
-  const handleNextPage = () => {
-    setCurrentPage(Math.min(currentPage + 1, totalPages - 1));
-  };
+  const { 
+    displayedItems: displayedCalamities, 
+    ...paginationControlsProps
+  } = usePagination<Calamity>({ itemsPerPage: ITEMS_PER_PAGE, allItems: calamities });
 
   return (
     <>
-      <div className="text-right pt-5 pr-10">
-        {calamities.length} active calamities
-      </div>
-
-      <div className="flex justify-center items-center">
-        <Button variant="outline" onClick={handlePrevPage} disabled={currentPage === 0}>
-          <StepBack />
-        </Button>
-        <Button variant="outline" onClick={handleNextPage} disabled={currentPage === totalPages - 1}>
-          <StepForward />
-        </Button>
+      <div className="flex justify-center items-center pt-4">
+        <PaginationControls {...paginationControlsProps}/>
+        <div className="absolute right-10">
+          {calamities.length} active calamities
+        </div>
       </div>
 
       <div className="pt-5 px-8">
