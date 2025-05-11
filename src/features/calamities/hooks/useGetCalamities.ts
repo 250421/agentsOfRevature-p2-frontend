@@ -1,0 +1,15 @@
+import { axiosInstance } from "@/lib/axios-config"
+import { useQuery } from "@tanstack/react-query"
+
+const getCalamities = async () => {
+    const resp = await axiosInstance.get('/auth/calamities');
+
+    return resp.data;
+}
+
+export const useGetCalamities = () => {
+    return useQuery({
+        queryKey: ['calamities'],
+        queryFn: getCalamities,
+    })
+}

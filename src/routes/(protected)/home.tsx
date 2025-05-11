@@ -1,7 +1,7 @@
 import { CalamityContainer } from '@/features/calamities/components/CalamityContainer'
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/(public)/home')({
+export const Route = createFileRoute('/(protected)/home')({
   component: RouteComponent,
 })
 
