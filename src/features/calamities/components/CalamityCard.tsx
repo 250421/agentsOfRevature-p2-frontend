@@ -8,21 +8,48 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-
-import type { Calamity } from "./CalamityContainer";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import type { Calamity } from "../models/calamity";
+import { useConfirm } from "@/hooks/use-confirm";
+import { useNavigate } from "@tanstack/react-router";
+import { useDeleteCalamity } from "../hooks/useDeleteCalamity";
 
+const respondDialogProps = {
+  title: 'Are you absolutely sure?',
+  description: 'Choosing to accept this mission will begin the game.',
+  confirmLabel: 'Begin',
+}
 
-export function CalamityCard({ location, severity, description }: Calamity) {
+const ignoreDialogProps = {
+  title: 'Are you really going to leave these people to their fate?',
+  description: 'Ignoring this calamity will remove it from your assignments. You will not be able to view it in the future. Perhaps another agent will save the day...',
+  confirmLabel: 'Ignore',
+  destructive: true,
+}
+
+export function CalamityCard({ id, location, severity, description }: Calamity) {
+  const [confirmRespondDialog, RespondDialogComponent] = useConfirm();
+  const [confirmIgnoreDialog, IgnoreDialogComponent] = useConfirm();
+  const navigate = useNavigate();
+  const deleteCalamity = useDeleteCalamity();
+
+  const handleConfirmRespond = async () => {
+    const confirmed = await confirmRespondDialog();
+
+    if (confirmed) {
+      navigate({ to: '/heroselect', search: { calamityId: id }});
+    }
+  }
+
+  const handleConfirmIgnore = async () => {
+    const confirmed = await confirmIgnoreDialog();
+
+    if (confirmed) {
+      deleteCalamity.mutate(id);
+    }
+  }
+
   return (
     <div className="min-w-min">
       <Card className={cn(
@@ -46,8 +73,10 @@ export function CalamityCard({ location, severity, description }: Calamity) {
         <Separator/>
         <CardFooter className="flex flex-row gap-x-2">
           <SeverityBadge severity={severity}></SeverityBadge>
-          <Button className="ml-auto bg-green-600">RESPOND</Button>
-          <Button className="bg-red-600">IGNORE</Button>
+          <Button onClick={handleConfirmRespond} className="ml-auto bg-green-600">RESPOND</Button>
+          <RespondDialogComponent {...respondDialogProps} />
+          <Button onClick={handleConfirmIgnore} className="bg-red-600">IGNORE</Button>
+          <IgnoreDialogComponent {...ignoreDialogProps} />
         </CardFooter>
       </Card>
     </div>

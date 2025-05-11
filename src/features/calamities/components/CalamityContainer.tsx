@@ -3,6 +3,8 @@ import { usePagination } from "@/hooks/usePagination";
 import { PaginationControls } from "@/components/shared/PaginationControls";
 import type { Calamity } from "../models/calamity";
 import { useGetCalamities } from "../hooks/useGetCalamities";
+import { Loader2, LoaderCircle, LoaderPinwheel } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 
 const calamities: Calamity[] = [
@@ -87,19 +89,27 @@ const calamities: Calamity[] = [
 const ITEMS_PER_PAGE = 3;
 
 export function CalamityContainer() {
-  const apiCalamities = useGetCalamities();
+  const{ data: apiCalamities, isLoading } = useGetCalamities();
 
   const {
     displayedItems: displayedCalamities,
     ...paginationControlsProps
   } = usePagination<Calamity>({ itemsPerPage: ITEMS_PER_PAGE, allItems: calamities });
 
+  if (isLoading) {
+    return (
+      <div className="text-center">
+        Loading...
+      </div>
+    )
+  }
+
   return (
     <>
       <div className="flex justify-center items-center pt-4">
         <PaginationControls {...paginationControlsProps} />
         <div className="absolute right-10">
-          {calamities.length} active calamities
+          {calamities.length ?? 0} active calamities
         </div>
       </div>
 
