@@ -1,15 +1,14 @@
-import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Navigate } from '@tanstack/react-router'
 import { useAuth } from '@/features/auth/hooks/use-auth'
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useSignOut } from '@/features/auth/hooks/use-sign-out'
+import { useConfirm } from '@/hooks/use-confirm'
 
 export const Route = createFileRoute('/profile')({
   component: ProfilePage,
@@ -17,7 +16,15 @@ export const Route = createFileRoute('/profile')({
 
 function ProfilePage() {
     const { data: user, isLoading } = useAuth()
+    
+    // methods for confirm dialog
+    const [logOutConfirm, LogOutDialog] = useConfirm();
     const { mutate: signOut } = useSignOut();
+    const handleLogOut =  async () => {
+        const ok = await logOutConfirm();
+        if (!ok) return;
+        signOut();
+    }
 
     if (isLoading) {
         return <div className="p-4 text-center">Loading profile…</div>
@@ -42,9 +49,17 @@ function ProfilePage() {
                     <dt>Prestige Points</dt>
                     <dd>#</dd>
                 </dl>
-                <Button onClick={() => signOut()} variant="outline" className="bg-red-500 text-gray-50">Logout</Button>
+                <Button onClick={handleLogOut} variant="outline" className="bg-red-500 text-gray-50">Logout</Button>
             </CardContent>
         </Card>
+
+        {/* confirm dialog */}
+        <LogOutDialog 
+            title={'Log Out'} 
+            description={'Are you sure you want to log out?'} 
+            destructive={true}
+        /> 
+
         <Card className="w-1/2">
             <CardHeader>
                 <CardTitle>Your Favorite Heroes</CardTitle>
@@ -64,6 +79,7 @@ function ProfilePage() {
                 </Card>
             </CardContent>
         </Card>
+
         <Card className="w-1/2">
             <CardHeader>
                 <CardTitle>Game Stats</CardTitle>
