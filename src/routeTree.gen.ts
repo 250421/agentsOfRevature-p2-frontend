@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as ProfileImport } from './routes/profile'
 import { Route as publicSignUpImport } from './routes/(public)/sign-up'
 import { Route as publicSignInImport } from './routes/(public)/sign-in'
 import { Route as publicLayoutImport } from './routes/(public)/_layout'
@@ -27,6 +28,12 @@ const publicImport = createFileRoute('/(public)')()
 
 const publicRoute = publicImport.update({
   id: '/(public)',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProfileRoute = ProfileImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -64,7 +71,10 @@ const protectedHeroselectRoute = protectedHeroselectImport.update({
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 79dafd51deb5d5705694f08804e8f4bbab85e4c3
     '/profile': {
       id: '/profile'
       path: '/profile'
@@ -72,6 +82,7 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileImport
       parentRoute: typeof rootRoute
     }
+<<<<<<< HEAD
     '/(protected)/heroselect': {
       id: '/(protected)/heroselect'
       path: '/heroselect'
@@ -87,6 +98,8 @@ declare module '@tanstack/react-router' {
       parentRoute: typeof rootRoute
     }
 >>>>>>> dce2d6c (Add placeholder hooks for fetching data from backend)
+=======
+>>>>>>> 79dafd51deb5d5705694f08804e8f4bbab85e4c3
     '/(public)': {
       id: '/(public)'
       path: '/'
@@ -137,11 +150,15 @@ const publicRouteWithChildren =
 
 export interface FileRoutesByFullPath {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   '/profile': typeof ProfileRoute
   '/heroselect': typeof protectedHeroselectRoute
   '/home': typeof protectedHomeRoute
 >>>>>>> dce2d6c (Add placeholder hooks for fetching data from backend)
+=======
+  '/profile': typeof ProfileRoute
+>>>>>>> 79dafd51deb5d5705694f08804e8f4bbab85e4c3
   '/': typeof publicLayoutRoute
   '/sign-in': typeof publicSignInRoute
   '/sign-up': typeof publicSignUpRoute
@@ -149,11 +166,15 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   '/profile': typeof ProfileRoute
   '/heroselect': typeof protectedHeroselectRoute
   '/home': typeof protectedHomeRoute
 >>>>>>> dce2d6c (Add placeholder hooks for fetching data from backend)
+=======
+  '/profile': typeof ProfileRoute
+>>>>>>> 79dafd51deb5d5705694f08804e8f4bbab85e4c3
   '/': typeof publicLayoutRoute
   '/sign-in': typeof publicSignInRoute
   '/sign-up': typeof publicSignUpRoute
@@ -162,11 +183,15 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   '/profile': typeof ProfileRoute
   '/(protected)/heroselect': typeof protectedHeroselectRoute
   '/(protected)/home': typeof protectedHomeRoute
 >>>>>>> dce2d6c (Add placeholder hooks for fetching data from backend)
+=======
+  '/profile': typeof ProfileRoute
+>>>>>>> 79dafd51deb5d5705694f08804e8f4bbab85e4c3
   '/(public)': typeof publicRouteWithChildren
   '/(public)/_layout': typeof publicLayoutRoute
   '/(public)/sign-in': typeof publicSignInRoute
@@ -175,6 +200,7 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
+<<<<<<< HEAD
 <<<<<<< HEAD
   fullPaths: '/' | '/home' | '/sign-in' | '/sign-up'
   fileRoutesByTo: FileRoutesByTo
@@ -197,6 +223,14 @@ export interface FileRouteTypes {
     | '/(protected)/heroselect'
     | '/(protected)/home'
 >>>>>>> dce2d6c (Add placeholder hooks for fetching data from backend)
+=======
+  fullPaths: '/profile' | '/' | '/sign-in' | '/sign-up'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/profile' | '/' | '/sign-in' | '/sign-up'
+  id:
+    | '__root__'
+    | '/profile'
+>>>>>>> 79dafd51deb5d5705694f08804e8f4bbab85e4c3
     | '/(public)'
     | '/(public)/_layout'
     | '/(public)/sign-in'
@@ -206,21 +240,29 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   ProfileRoute: typeof ProfileRoute
   protectedHeroselectRoute: typeof protectedHeroselectRoute
   protectedHomeRoute: typeof protectedHomeRoute
 >>>>>>> dce2d6c (Add placeholder hooks for fetching data from backend)
+=======
+  ProfileRoute: typeof ProfileRoute
+>>>>>>> 79dafd51deb5d5705694f08804e8f4bbab85e4c3
   publicRoute: typeof publicRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
   ProfileRoute: ProfileRoute,
   protectedHeroselectRoute: protectedHeroselectRoute,
   protectedHomeRoute: protectedHomeRoute,
 >>>>>>> dce2d6c (Add placeholder hooks for fetching data from backend)
+=======
+  ProfileRoute: ProfileRoute,
+>>>>>>> 79dafd51deb5d5705694f08804e8f4bbab85e4c3
   publicRoute: publicRouteWithChildren,
 }
 
@@ -234,6 +276,7 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+<<<<<<< HEAD
 <<<<<<< HEAD
         "/(public)"
       ]
@@ -255,6 +298,15 @@ export const routeTree = rootRoute
       "filePath": "(protected)/home.tsx"
     },
 >>>>>>> dce2d6c (Add placeholder hooks for fetching data from backend)
+=======
+        "/profile",
+        "/(public)"
+      ]
+    },
+    "/profile": {
+      "filePath": "profile.tsx"
+    },
+>>>>>>> 79dafd51deb5d5705694f08804e8f4bbab85e4c3
     "/(public)": {
       "filePath": "(public)",
       "children": [
