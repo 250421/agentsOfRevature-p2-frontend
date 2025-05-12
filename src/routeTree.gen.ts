@@ -13,10 +13,10 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ProfileImport } from './routes/profile'
 import { Route as publicSignUpImport } from './routes/(public)/sign-up'
 import { Route as publicSignInImport } from './routes/(public)/sign-in'
 import { Route as publicLayoutImport } from './routes/(public)/_layout'
+import { Route as protectedProfileImport } from './routes/(protected)/profile'
 import { Route as protectedHomeImport } from './routes/(protected)/home'
 
 // Create Virtual Routes
@@ -27,12 +27,6 @@ const publicImport = createFileRoute('/(public)')()
 
 const publicRoute = publicImport.update({
   id: '/(public)',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ProfileRoute = ProfileImport.update({
-  id: '/profile',
-  path: '/profile',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -53,6 +47,12 @@ const publicLayoutRoute = publicLayoutImport.update({
   getParentRoute: () => publicRoute,
 } as any)
 
+const protectedProfileRoute = protectedProfileImport.update({
+  id: '/(protected)/profile',
+  path: '/profile',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const protectedHomeRoute = protectedHomeImport.update({
   id: '/(protected)/home',
   path: '/home',
@@ -63,18 +63,18 @@ const protectedHomeRoute = protectedHomeImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileImport
-      parentRoute: typeof rootRoute
-    }
     '/(protected)/home': {
       id: '/(protected)/home'
       path: '/home'
       fullPath: '/home'
       preLoaderRoute: typeof protectedHomeImport
+      parentRoute: typeof rootRoute
+    }
+    '/(protected)/profile': {
+      id: '/(protected)/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof protectedProfileImport
       parentRoute: typeof rootRoute
     }
     '/(public)': {
@@ -126,16 +126,16 @@ const publicRouteWithChildren =
   publicRoute._addFileChildren(publicRouteChildren)
 
 export interface FileRoutesByFullPath {
-  '/profile': typeof ProfileRoute
   '/home': typeof protectedHomeRoute
+  '/profile': typeof protectedProfileRoute
   '/': typeof publicLayoutRoute
   '/sign-in': typeof publicSignInRoute
   '/sign-up': typeof publicSignUpRoute
 }
 
 export interface FileRoutesByTo {
-  '/profile': typeof ProfileRoute
   '/home': typeof protectedHomeRoute
+  '/profile': typeof protectedProfileRoute
   '/': typeof publicLayoutRoute
   '/sign-in': typeof publicSignInRoute
   '/sign-up': typeof publicSignUpRoute
@@ -143,8 +143,8 @@ export interface FileRoutesByTo {
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/profile': typeof ProfileRoute
   '/(protected)/home': typeof protectedHomeRoute
+  '/(protected)/profile': typeof protectedProfileRoute
   '/(public)': typeof publicRouteWithChildren
   '/(public)/_layout': typeof publicLayoutRoute
   '/(public)/sign-in': typeof publicSignInRoute
@@ -153,13 +153,13 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/profile' | '/home' | '/' | '/sign-in' | '/sign-up'
+  fullPaths: '/home' | '/profile' | '/' | '/sign-in' | '/sign-up'
   fileRoutesByTo: FileRoutesByTo
-  to: '/profile' | '/home' | '/' | '/sign-in' | '/sign-up'
+  to: '/home' | '/profile' | '/' | '/sign-in' | '/sign-up'
   id:
     | '__root__'
-    | '/profile'
     | '/(protected)/home'
+    | '/(protected)/profile'
     | '/(public)'
     | '/(public)/_layout'
     | '/(public)/sign-in'
@@ -168,14 +168,14 @@ export interface FileRouteTypes {
 }
 
 export interface RootRouteChildren {
-  ProfileRoute: typeof ProfileRoute
   protectedHomeRoute: typeof protectedHomeRoute
+  protectedProfileRoute: typeof protectedProfileRoute
   publicRoute: typeof publicRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  ProfileRoute: ProfileRoute,
   protectedHomeRoute: protectedHomeRoute,
+  protectedProfileRoute: protectedProfileRoute,
   publicRoute: publicRouteWithChildren,
 }
 
@@ -189,16 +189,16 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/profile",
         "/(protected)/home",
+        "/(protected)/profile",
         "/(public)"
       ]
     },
-    "/profile": {
-      "filePath": "profile.tsx"
-    },
     "/(protected)/home": {
       "filePath": "(protected)/home.tsx"
+    },
+    "/(protected)/profile": {
+      "filePath": "(protected)/profile.tsx"
     },
     "/(public)": {
       "filePath": "(public)",

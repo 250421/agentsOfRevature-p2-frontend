@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 import { useSignOut } from '@/features/auth/hooks/use-sign-out'
 import { useConfirm } from '@/hooks/use-confirm'
 
-export const Route = createFileRoute('/profile')({
+export const Route = createFileRoute('/(protected)/profile')({
   component: ProfilePage,
 })
 
