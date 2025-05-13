@@ -8,7 +8,7 @@ interface GameChoiceProps {
 
 export function GameChoice({ choice, onClick }: GameChoiceProps) {
   return (
-    <Button variant='outline' onClick={() => onClick(choice.id)}>
+    <Button variant='outline' onClick={() => onClick(choice.id)} className="w-full p-5">
         <p>{choice.text}</p>
     </Button>
   );

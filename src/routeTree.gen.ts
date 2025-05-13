@@ -18,7 +18,6 @@ import { Route as publicPublicImport } from './routes/(public)/_public'
 import { Route as protectedProtectedImport } from './routes/(protected)/_protected'
 import { Route as protectedProtectedIndexImport } from './routes/(protected)/_protected.index'
 import { Route as publicPublicSignUpImport } from './routes/(public)/_public.sign-up'
-import { Route as publicPublicSignOutImport } from './routes/(public)/_public.sign-out'
 import { Route as publicPublicSignInImport } from './routes/(public)/_public.sign-in'
 import { Route as protectedProtectedHeroselectImport } from './routes/(protected)/_protected.heroselect'
 import { Route as protectedProtectedGameChapterIdImport } from './routes/(protected)/_protected.game.$chapterId'
@@ -65,12 +64,6 @@ const protectedProtectedIndexRoute = protectedProtectedIndexImport.update({
 const publicPublicSignUpRoute = publicPublicSignUpImport.update({
   id: '/sign-up',
   path: '/sign-up',
-  getParentRoute: () => publicPublicRoute,
-} as any)
-
-const publicPublicSignOutRoute = publicPublicSignOutImport.update({
-  id: '/sign-out',
-  path: '/sign-out',
   getParentRoute: () => publicPublicRoute,
 } as any)
 
@@ -147,13 +140,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof publicPublicSignInImport
       parentRoute: typeof publicPublicImport
     }
-    '/(public)/_public/sign-out': {
-      id: '/(public)/_public/sign-out'
-      path: '/sign-out'
-      fullPath: '/sign-out'
-      preLoaderRoute: typeof publicPublicSignOutImport
-      parentRoute: typeof publicPublicImport
-    }
     '/(public)/_public/sign-up': {
       id: '/(public)/_public/sign-up'
       path: '/sign-up'
@@ -209,13 +195,11 @@ const protectedRouteWithChildren = protectedRoute._addFileChildren(
 
 interface publicPublicRouteChildren {
   publicPublicSignInRoute: typeof publicPublicSignInRoute
-  publicPublicSignOutRoute: typeof publicPublicSignOutRoute
   publicPublicSignUpRoute: typeof publicPublicSignUpRoute
 }
 
 const publicPublicRouteChildren: publicPublicRouteChildren = {
   publicPublicSignInRoute: publicPublicSignInRoute,
-  publicPublicSignOutRoute: publicPublicSignOutRoute,
   publicPublicSignUpRoute: publicPublicSignUpRoute,
 }
 
@@ -239,7 +223,6 @@ export interface FileRoutesByFullPath {
   '/': typeof protectedProtectedIndexRoute
   '/heroselect': typeof protectedProtectedHeroselectRoute
   '/sign-in': typeof publicPublicSignInRoute
-  '/sign-out': typeof publicPublicSignOutRoute
   '/sign-up': typeof publicPublicSignUpRoute
   '/game/$chapterId': typeof protectedProtectedGameChapterIdRoute
 }
@@ -249,7 +232,6 @@ export interface FileRoutesByTo {
   '/': typeof protectedProtectedIndexRoute
   '/heroselect': typeof protectedProtectedHeroselectRoute
   '/sign-in': typeof publicPublicSignInRoute
-  '/sign-out': typeof publicPublicSignOutRoute
   '/sign-up': typeof publicPublicSignUpRoute
   '/game/$chapterId': typeof protectedProtectedGameChapterIdRoute
 }
@@ -263,7 +245,6 @@ export interface FileRoutesById {
   '/(public)/_public': typeof publicPublicRouteWithChildren
   '/(protected)/_protected/heroselect': typeof protectedProtectedHeroselectRoute
   '/(public)/_public/sign-in': typeof publicPublicSignInRoute
-  '/(public)/_public/sign-out': typeof publicPublicSignOutRoute
   '/(public)/_public/sign-up': typeof publicPublicSignUpRoute
   '/(protected)/_protected/': typeof protectedProtectedIndexRoute
   '/(protected)/_protected/game/$chapterId': typeof protectedProtectedGameChapterIdRoute
@@ -276,7 +257,6 @@ export interface FileRouteTypes {
     | '/'
     | '/heroselect'
     | '/sign-in'
-    | '/sign-out'
     | '/sign-up'
     | '/game/$chapterId'
   fileRoutesByTo: FileRoutesByTo
@@ -285,7 +265,6 @@ export interface FileRouteTypes {
     | '/'
     | '/heroselect'
     | '/sign-in'
-    | '/sign-out'
     | '/sign-up'
     | '/game/$chapterId'
   id:
@@ -297,7 +276,6 @@ export interface FileRouteTypes {
     | '/(public)/_public'
     | '/(protected)/_protected/heroselect'
     | '/(public)/_public/sign-in'
-    | '/(public)/_public/sign-out'
     | '/(public)/_public/sign-up'
     | '/(protected)/_protected/'
     | '/(protected)/_protected/game/$chapterId'
@@ -360,7 +338,6 @@ export const routeTree = rootRoute
       "parent": "/(public)",
       "children": [
         "/(public)/_public/sign-in",
-        "/(public)/_public/sign-out",
         "/(public)/_public/sign-up"
       ]
     },
@@ -370,10 +347,6 @@ export const routeTree = rootRoute
     },
     "/(public)/_public/sign-in": {
       "filePath": "(public)/_public.sign-in.tsx",
-      "parent": "/(public)/_public"
-    },
-    "/(public)/_public/sign-out": {
-      "filePath": "(public)/_public.sign-out.tsx",
       "parent": "/(public)/_public"
     },
     "/(public)/_public/sign-up": {
