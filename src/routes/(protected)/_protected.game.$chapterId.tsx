@@ -5,7 +5,7 @@ import { useChoiceSelected } from "@/features/game/hooks/useChoiceSelected";
 // import { useGetChapter } from "@/features/game/hooks/useGetChapter";
 // import { Loader2 } from "lucide-react";
 
-export const Route = createFileRoute("/(protected)/game/$chapterId")({
+export const Route = createFileRoute("/(protected)/_protected/game/$chapterId")({
   component: RouteComponent,
 });
 
