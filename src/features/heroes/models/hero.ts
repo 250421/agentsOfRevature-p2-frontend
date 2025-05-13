@@ -1,6 +1,8 @@
-export interface Hero {
-    id: string
-    name: string
-    powerstats: Record<string, string>
-  }
-  
+type Hero = {
+  id: number
+  alias: string
+  strength: number
+  speed: number
+  power: number
+  combat: number
+}
