@@ -13,9 +13,13 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as ProfileImport } from './routes/profile'
 import { Route as publicSignUpImport } from './routes/(public)/sign-up'
 import { Route as publicSignInImport } from './routes/(public)/sign-in'
 import { Route as publicLayoutImport } from './routes/(public)/_layout'
+import { Route as protectedHomeImport } from './routes/(protected)/home'
+import { Route as protectedHeroselectImport } from './routes/(protected)/heroselect'
+import { Route as protectedGameChapterIdImport } from './routes/(protected)/game.$chapterId'
 
 // Create Virtual Routes
 
@@ -25,6 +29,12 @@ const publicImport = createFileRoute('/(public)')()
 
 const publicRoute = publicImport.update({
   id: '/(public)',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProfileRoute = ProfileImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -45,10 +55,49 @@ const publicLayoutRoute = publicLayoutImport.update({
   getParentRoute: () => publicRoute,
 } as any)
 
+const protectedHomeRoute = protectedHomeImport.update({
+  id: '/(protected)/home',
+  path: '/home',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const protectedHeroselectRoute = protectedHeroselectImport.update({
+  id: '/(protected)/heroselect',
+  path: '/heroselect',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const protectedGameChapterIdRoute = protectedGameChapterIdImport.update({
+  id: '/(protected)/game/$chapterId',
+  path: '/game/$chapterId',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileImport
+      parentRoute: typeof rootRoute
+    }
+    '/(protected)/heroselect': {
+      id: '/(protected)/heroselect'
+      path: '/heroselect'
+      fullPath: '/heroselect'
+      preLoaderRoute: typeof protectedHeroselectImport
+      parentRoute: typeof rootRoute
+    }
+    '/(protected)/home': {
+      id: '/(protected)/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof protectedHomeImport
+      parentRoute: typeof rootRoute
+    }
     '/(public)': {
       id: '/(public)'
       path: '/'
@@ -77,6 +126,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof publicSignUpImport
       parentRoute: typeof publicImport
     }
+    '/(protected)/game/$chapterId': {
+      id: '/(protected)/game/$chapterId'
+      path: '/game/$chapterId'
+      fullPath: '/game/$chapterId'
+      preLoaderRoute: typeof protectedGameChapterIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -98,45 +154,83 @@ const publicRouteWithChildren =
   publicRoute._addFileChildren(publicRouteChildren)
 
 export interface FileRoutesByFullPath {
+  '/profile': typeof ProfileRoute
+  '/heroselect': typeof protectedHeroselectRoute
+  '/home': typeof protectedHomeRoute
   '/': typeof publicLayoutRoute
   '/sign-in': typeof publicSignInRoute
   '/sign-up': typeof publicSignUpRoute
+  '/game/$chapterId': typeof protectedGameChapterIdRoute
 }
 
 export interface FileRoutesByTo {
+  '/profile': typeof ProfileRoute
+  '/heroselect': typeof protectedHeroselectRoute
+  '/home': typeof protectedHomeRoute
   '/': typeof publicLayoutRoute
   '/sign-in': typeof publicSignInRoute
   '/sign-up': typeof publicSignUpRoute
+  '/game/$chapterId': typeof protectedGameChapterIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/profile': typeof ProfileRoute
+  '/(protected)/heroselect': typeof protectedHeroselectRoute
+  '/(protected)/home': typeof protectedHomeRoute
   '/(public)': typeof publicRouteWithChildren
   '/(public)/_layout': typeof publicLayoutRoute
   '/(public)/sign-in': typeof publicSignInRoute
   '/(public)/sign-up': typeof publicSignUpRoute
+  '/(protected)/game/$chapterId': typeof protectedGameChapterIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-in' | '/sign-up'
+  fullPaths:
+    | '/profile'
+    | '/heroselect'
+    | '/home'
+    | '/'
+    | '/sign-in'
+    | '/sign-up'
+    | '/game/$chapterId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sign-in' | '/sign-up'
+  to:
+    | '/profile'
+    | '/heroselect'
+    | '/home'
+    | '/'
+    | '/sign-in'
+    | '/sign-up'
+    | '/game/$chapterId'
   id:
     | '__root__'
+    | '/profile'
+    | '/(protected)/heroselect'
+    | '/(protected)/home'
     | '/(public)'
     | '/(public)/_layout'
     | '/(public)/sign-in'
     | '/(public)/sign-up'
+    | '/(protected)/game/$chapterId'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
+  ProfileRoute: typeof ProfileRoute
+  protectedHeroselectRoute: typeof protectedHeroselectRoute
+  protectedHomeRoute: typeof protectedHomeRoute
   publicRoute: typeof publicRouteWithChildren
+  protectedGameChapterIdRoute: typeof protectedGameChapterIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  ProfileRoute: ProfileRoute,
+  protectedHeroselectRoute: protectedHeroselectRoute,
+  protectedHomeRoute: protectedHomeRoute,
   publicRoute: publicRouteWithChildren,
+  protectedGameChapterIdRoute: protectedGameChapterIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -149,8 +243,21 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/(public)"
+        "/profile",
+        "/(protected)/heroselect",
+        "/(protected)/home",
+        "/(public)",
+        "/(protected)/game/$chapterId"
       ]
+    },
+    "/profile": {
+      "filePath": "profile.tsx"
+    },
+    "/(protected)/heroselect": {
+      "filePath": "(protected)/heroselect.tsx"
+    },
+    "/(protected)/home": {
+      "filePath": "(protected)/home.tsx"
     },
     "/(public)": {
       "filePath": "(public)",
@@ -171,6 +278,9 @@ export const routeTree = rootRoute
     "/(public)/sign-up": {
       "filePath": "(public)/sign-up.tsx",
       "parent": "/(public)"
+    },
+    "/(protected)/game/$chapterId": {
+      "filePath": "(protected)/game.$chapterId.tsx"
     }
   }
 }
