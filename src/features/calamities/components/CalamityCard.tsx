@@ -53,7 +53,7 @@ export function CalamityCard({ id, location, severity, description }: Calamity) 
   return (
     <div className="min-w-min">
       <Card className={cn(
-                  "border-5",
+                  "border-l-5",
                   {
                       "border-l-purple-700": severity === "critical",
                       "border-l-red-600": severity === "high",
