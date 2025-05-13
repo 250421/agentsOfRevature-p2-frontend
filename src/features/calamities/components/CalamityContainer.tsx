@@ -2,9 +2,8 @@ import { CalamityCard } from "./CalamityCard";
 import { usePagination } from "@/hooks/usePagination";
 import { PaginationControls } from "@/components/shared/PaginationControls";
 import type { Calamity } from "../models/calamity";
-import { useGetCalamities } from "../hooks/useGetCalamities";
-import { Loader2, LoaderCircle, LoaderPinwheel } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
+// import { useGetCalamities } from "../hooks/useGetCalamities";
+// import { Loader2 } from "lucide-react";
 
 
 const calamities: Calamity[] = [
@@ -89,20 +88,20 @@ const calamities: Calamity[] = [
 const ITEMS_PER_PAGE = 3;
 
 export function CalamityContainer() {
-  const{ data: apiCalamities, isLoading } = useGetCalamities();
+  // const{ data: apiCalamities, isLoading } = useGetCalamities();
 
   const {
     displayedItems: displayedCalamities,
     ...paginationControlsProps
   } = usePagination<Calamity>({ itemsPerPage: ITEMS_PER_PAGE, allItems: calamities });
 
-  if (isLoading) {
-    return (
-      <div className="text-center">
-        Loading...
-      </div>
-    )
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex items-center justify-center">
+  //       <Loader2 className="animate-spin"/>
+  //     </div>
+  //   )
+  // }
 
   return (
     <>
