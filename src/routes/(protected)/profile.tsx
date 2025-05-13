@@ -30,10 +30,6 @@ function ProfilePage() {
         return <div className="p-4 text-center">Loading profile…</div>
     }
 
-    // If not logged in, redirect to sign‑in
-    if (!user) {
-        return <Navigate to="/sign-in" />
-    }
 
     return (
         <>
@@ -45,7 +41,7 @@ function ProfilePage() {
             <CardContent>
                 <dl className="grid grid-cols-1 gap-2">
                     <dt>Display Name</dt>
-                    <dd>{user.username}</dd>
+                    {/* <dd>{user.username}</dd> */}
                     <dt>Prestige Points</dt>
                     <dd>#</dd>
                 </dl>
