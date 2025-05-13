@@ -2,10 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { GameChoiceContainer } from "@/features/game/components/GameChoiceContainer";
 import { GameText } from "@/features/game/components/GameText";
 import { useChoiceSelected } from "@/features/game/hooks/useChoiceSelected";
+import { GameHeader } from "@/features/game/components/GameHeader";
+import { Separator } from "@/components/ui/separator";
 // import { useGetChapter } from "@/features/game/hooks/useGetChapter";
 // import { Loader2 } from "lucide-react";
 
-export const Route = createFileRoute("/(protected)/game/$chapterId")({
+export const Route = createFileRoute("/(protected)/_protected/game/$chapterId")({
   component: RouteComponent,
 });
 
@@ -75,8 +77,8 @@ function RouteComponent() {
   // }
 
   return (
-    <div>
-      <h1>{chapter.title}</h1>
+    <div className="container mx-auto max-w-4xl">
+      <GameHeader title={chapter.title}/>
       <GameText gameText={chapter.text} />
       <GameChoiceContainer choices={chapter.choices} onChoiceSelect={handleChoiceSelect}/>
     </div>

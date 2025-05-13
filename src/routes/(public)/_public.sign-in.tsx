@@ -21,7 +21,7 @@ import { Button } from '@/components/ui/button';
 import { signinSchema, type SignInSchemaType } from '@/features/auth/schemas/sign-in-schema';
 import { useSignIn } from '@/features/auth/hooks/use-sign-in';
 
-export const Route = createFileRoute('/(public)/sign-in')({
+export const Route = createFileRoute('/(public)/_public/sign-in')({
     component: SignInPage,
 })
   

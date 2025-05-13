@@ -21,7 +21,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from '@/components/ui/button';
 import { useSignUp } from '@/features/auth/hooks/use-sign-up';
 
-export const Route = createFileRoute('/(public)/sign-up')({
+
+export const Route = createFileRoute('/(public)/_public/sign-up')({
   component: SignUpPage,
 })
 
