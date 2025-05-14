@@ -38,6 +38,7 @@ export const columns: ColumnDef<Hero>[] = [
     {
         accessorKey: "alias",
         header: "Alias",
+        filterFn: "includesString",
     },
     {
         accessorKey: "strength",
