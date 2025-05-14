@@ -37,7 +37,7 @@ export function RouteComponent() {
   const { data: heroes = [], isLoading } = useQuery<Hero[], Error>({
     queryKey:   ['heroes'],
     queryFn:    fetchHeroes,
-    staleTime:  1000 * 60 * 5, // cache
+    staleTime:  1000 * 60 * 15, // cache, last number is minutes
   })
 
   // paginate 5 heroes per page:
@@ -68,7 +68,7 @@ export function RouteComponent() {
           {Math.ceil(heroes.length / 5)}
         </span>
       </div>
-
+      
       {/* only the current page of heroes goes into the table */}
       <DataTable columns={columns} data={displayedItems} />
     </div>
