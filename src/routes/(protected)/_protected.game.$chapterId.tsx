@@ -3,7 +3,6 @@ import { GameChoiceContainer } from "@/features/game/components/GameChoiceContai
 import { GameText } from "@/features/game/components/GameText";
 import { useChoiceSelected } from "@/features/game/hooks/useChoiceSelected";
 import { GameHeader } from "@/features/game/components/GameHeader";
-import { Separator } from "@/components/ui/separator";
 // import { useGetChapter } from "@/features/game/hooks/useGetChapter";
 // import { Loader2 } from "lucide-react";
 
