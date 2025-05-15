@@ -9,7 +9,12 @@ export type User = {
 const columnHelper = createColumnHelper<User>();
 
 export const leaderboardColumns = [
-    columnHelper.accessor("username", {}),
+    columnHelper.display({
+        id: 'rank',
+        header: 'Rank',
+        cell: ({ row }) => row.index + 1,
+    }),
+    columnHelper.accessor("username", { enableSorting: false }),
     columnHelper.accessor("prestige", {}),
     columnHelper.accessor("missionsCompleted", {}),
 ];
