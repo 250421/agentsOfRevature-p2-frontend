@@ -1,6 +1,6 @@
 'use client'
 
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, useLocation, useNavigate } from '@tanstack/react-router'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   useReactTable,
@@ -80,34 +80,40 @@ export function RouteComponent() {
   })
 
   const navigate = useNavigate()
+  const location = useLocation()
+  const params = new URLSearchParams(location.search || '')
+  const calamityId = params.get('calamityId')
   const queryClient = useQueryClient()
   const [confirm, ConfirmDialog] = useConfirm()
 
   // get selected heroes
-  const selected = table
-    .getSelectedRowModel()
-    .rows.map((r) => r.original)
-    
+  const selectedRows = table
+  .getSelectedRowModel()
+  .rows.map(r => r.original)
+  const selectedNames = selectedRows.map(h => h.alias)
   const selectedCount = table.getSelectedRowModel().rows.length
   const canContinue = selectedCount === 3
 
   // POST to backend
-  const deployMutation = useMutation<void, Error, number[]>({
-    mutationFn: async (heroIds) => {
-      await fetch('/api/game/deploy', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ heroes: heroIds }),
-      })
+  const deployMutation = useMutation<
+    { scenarioId: string },
+    Error,
+    string[]
+  >({
+    mutationFn: async (heroNames) => {
+      const res = await fetch("/api/game/deploy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ calamityId, heroes: heroNames }),
+      });
+      if (!res.ok) throw new Error("Deploy failed");
+      return res.json();
     },
-    onSuccess() {
-        // invalidate or refetch queries
-        queryClient.invalidateQueries({ queryKey: ['game', 'current'] })
+    onSuccess(data) {
+      navigate({ to: `/game/${data.scenarioId}` });
+    },
+  });
 
-        navigate({ to: '/profile' })
-      },
-    }
-  )
 
   async function handleDeployClick() {
     // open dialog
@@ -115,8 +121,7 @@ export function RouteComponent() {
     if (!ok) return
 
     // if exactly 3, trigger
-    const ids = selected.map((h) => h.id)
-    deployMutation.mutate(ids)
+    deployMutation.mutate(selectedNames)
   }
   
   if (isLoading) {
@@ -189,9 +194,9 @@ export function RouteComponent() {
         <>
           You're about to deploy these three heroes:
           <ul className="list-disc ml-6 mt-2">
-            {selected.map((h) => (
-              <li key={h.id}>{h.alias}</li>
-            ))}
+          {selectedNames.map((heroName) => (
+            <li key={heroName}>{heroName}</li>
+          ))}
           </ul>
         </>
       }
