@@ -19,8 +19,6 @@ export function LeaderboardTable() {
   const table = useReactTable({
     columns,
     data,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     initialState: {
       sorting: [
         {
@@ -29,6 +27,8 @@ export function LeaderboardTable() {
         },
       ],
     },
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   return (
@@ -42,12 +42,12 @@ export function LeaderboardTable() {
                 onClick={header.column.getToggleSortingHandler()}
               >
                 <div className="flex items-center">
-                {flexRender(
-                  header.column.columnDef.header,
-                  header.getContext()
-                )}
-                {header.column.getIsSorted() === "desc" && <ChevronDown />}
-                {header.column.getIsSorted() === "asc" && <ChevronUp />}
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                  {header.column.getIsSorted() === "desc" && <ChevronDown />}
+                  {header.column.getIsSorted() === "asc" && <ChevronUp />}
                 </div>
               </TableHead>
             ))}
