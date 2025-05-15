@@ -14,6 +14,7 @@ import { Input }            from '@/components/ui/input'
 import { PaginationControls } from '@/components/shared/PaginationControls'
 import { usePagination }    from '@/hooks/usePagination'
 import { columns, type Hero } from '@/features/heroes/components/columns'
+import { Button } from '@/components/ui/button'
 
 async function fetchHeroes(): Promise<Hero[]> {
   const ids = Array.from({ length: 731 }, (_, i) => i + 1)
@@ -78,6 +79,7 @@ export function RouteComponent() {
   })
 
   const selectedCount = table.getSelectedRowModel().rows.length
+  const canContinue = selectedCount === 3
 
   if (isLoading) {
     return <div>Loading…</div>
@@ -85,25 +87,38 @@ export function RouteComponent() {
 
   return (
     <div className="container mx-auto py-10 space-y-4">
-      <h1 className="text-2xl font-bold">Select Heroes</h1>
+      
+      <h1 className="text-2xl font-bold">Select 3 Heroes</h1>
 
       <div className="text-sm text-gray-700">
         {selectedCount} hero{selectedCount === 1 ? '' : 'es'} selected
       </div>
 
-      <Input
-        placeholder="Search for a hero"
-        value={(table.getColumn('alias')?.getFilterValue() as string) ?? ''}
-        onChange={(e) => table.getColumn('alias')?.setFilterValue(e.target.value)}
-        className="max-w-sm"
-      />
+      <div className="flex flex-row">
+        <PaginationControls
+          handlePrevPage={handlePrevPage}
+          handleNextPage={handleNextPage}
+          canPrevPage={canPrevPage}
+          canNextPage={canNextPage}
+        />
 
-      <PaginationControls
-        handlePrevPage={handlePrevPage}
-        handleNextPage={handleNextPage}
-        canPrevPage={canPrevPage}
-        canNextPage={canNextPage}
-      />
+        <Input
+          placeholder="Search for a hero"
+          value={(table.getColumn('alias')?.getFilterValue() as string) ?? ''}
+          onChange={(e) => table.getColumn('alias')?.setFilterValue(e.target.value)}
+          className="max-w-sm"
+        />
+
+        <Button
+          onClick={() => {
+            /* display confirmation popup */
+          }}
+          disabled={!canContinue}
+          className="ml-auto"
+        >
+          Deploy Heroes
+        </Button>   
+      </div>
 
       <table className="min-w-full border-collapse border">
         <thead className="bg-gray-100">
