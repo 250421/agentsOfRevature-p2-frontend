@@ -1,7 +1,7 @@
 'use client'
 
-import { createFileRoute } from '@tanstack/react-router'
-import { useQuery }        from '@tanstack/react-query'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   useReactTable,
   getCoreRowModel,
@@ -9,12 +9,13 @@ import {
   flexRender,
   type ColumnFiltersState,
 } from '@tanstack/react-table'
-import { useState }         from 'react'
-import { Input }            from '@/components/ui/input'
+import { useState } from 'react'
+import { Input } from '@/components/ui/input'
 import { PaginationControls } from '@/components/shared/PaginationControls'
-import { usePagination }    from '@/hooks/usePagination'
+import { usePagination } from '@/hooks/usePagination'
 import { columns, type Hero } from '@/features/heroes/components/columns'
 import { Button } from '@/components/ui/button'
+import { useConfirm } from '@/hooks/use-confirm'
 
 async function fetchHeroes(): Promise<Hero[]> {
   const ids = Array.from({ length: 731 }, (_, i) => i + 1)
@@ -78,9 +79,46 @@ export function RouteComponent() {
     itemsPerPage: 15,
   })
 
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
+  const [confirm, ConfirmDialog] = useConfirm()
+
+  // get selected heroes
+  const selected = table
+    .getSelectedRowModel()
+    .rows.map((r) => r.original)
+    
   const selectedCount = table.getSelectedRowModel().rows.length
   const canContinue = selectedCount === 3
 
+  // POST to backend
+  const deployMutation = useMutation<void, Error, number[]>({
+    mutationFn: async (heroIds) => {
+      await fetch('/api/game/deploy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ heroes: heroIds }),
+      })
+    },
+    onSuccess() {
+        // invalidate or refetch queries
+        queryClient.invalidateQueries({ queryKey: ['game', 'current'] })
+
+        navigate({ to: '/profile' })
+      },
+    }
+  )
+
+  async function handleDeployClick() {
+    // open dialog
+    const ok = await confirm()
+    if (!ok) return
+
+    // if exactly 3, trigger
+    const ids = selected.map((h) => h.id)
+    deployMutation.mutate(ids)
+  }
+  
   if (isLoading) {
     return <div>Loading…</div>
   }
@@ -110,14 +148,12 @@ export function RouteComponent() {
         />
 
         <Button
-          onClick={() => {
-            /* display confirmation popup */
-          }}
-          disabled={!canContinue}
+          onClick={handleDeployClick}
+          disabled={selectedCount !== 3}
           className="ml-auto"
         >
           Deploy Heroes
-        </Button>   
+        </Button>
       </div>
 
       <table className="min-w-full border-collapse border">
@@ -146,6 +182,23 @@ export function RouteComponent() {
           ))}
         </tbody>
       </table>
-    </div>
+
+    <ConfirmDialog
+      title="Deploy Heroes?"
+      description={
+        <>
+          You're about to deploy these three heroes:
+          <ul className="list-disc ml-6 mt-2">
+            {selected.map((h) => (
+              <li key={h.id}>{h.alias}</li>
+            ))}
+          </ul>
+        </>
+      }
+      confirmLabel="Yes, Deploy"
+      cancelLabel="Cancel"
+      destructive={false}
+    />
+  </div>
   )
 }
