@@ -12,14 +12,26 @@ export const leaderboardColumns = [
   columnHelper.display({
     id: "rank",
     header: "Rank",
-    cell: ({ row, table }) =>
-      table
-        .getRowModel()
-        .rows.findIndex((sortedRow) => sortedRow.id === row.id) + 1,
+    cell: ({ row, table }) => {
+      const rank =
+        table
+          .getRowModel()
+          .rows.findIndex((sortedRow) => sortedRow.id === row.id) + 1;
+      return <div className="text-center font-semibold">{rank}</div>;
+    },
   }),
   columnHelper.accessor("username", { enableSorting: false }),
-  columnHelper.accessor("prestige", { enableSorting: true }),
-  columnHelper.accessor("missionsCompleted", { enableSorting: true }),
+  columnHelper.accessor("prestige", {
+    cell: ({ row }) => (
+      <div className="text-right font-semibold">{row.original.prestige}</div>
+    ),
+  }),
+  columnHelper.accessor("missionsCompleted", {
+    header: "Missions",
+    cell: ({ row }) => (
+      <div className="text-right">{row.original.missionsCompleted}</div>
+    ),
+  }),
 ];
 
 export const data: User[] = [

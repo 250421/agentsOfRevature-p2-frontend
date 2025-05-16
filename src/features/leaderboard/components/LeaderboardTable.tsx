@@ -13,7 +13,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowDownUp, ArrowDownWideNarrow, ArrowUpNarrowWide } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export function LeaderboardTable() {
   const table = useReactTable({
@@ -32,7 +33,7 @@ export function LeaderboardTable() {
   });
 
   return (
-    <Table>
+    <Table className="table-fixed w-lg mx-auto">
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
@@ -40,14 +41,20 @@ export function LeaderboardTable() {
               <TableHead
                 key={header.id}
                 onClick={header.column.getToggleSortingHandler()}
+                style={{ width: 'auto' }}
+                className={cn(
+                  "py-3 not-last:text-left font-semibold uppercase tracking-widest",
+                  header.column.getCanSort() && "cursor-pointer",
+                )}
               >
-                <div className="flex items-center">
+                <div className="flex items-center gap-1">
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext()
                   )}
-                  {header.column.getIsSorted() === "desc" && <ChevronDown />}
-                  {header.column.getIsSorted() === "asc" && <ChevronUp />}
+                  {header.column.getIsSorted() === "desc" && <ArrowDownWideNarrow />}
+                  {header.column.getIsSorted() === "asc" && <ArrowUpNarrowWide />}
+                  {header.column.getCanSort() && header.column.getIsSorted() === false && <ArrowDownUp />}
                 </div>
               </TableHead>
             ))}
@@ -59,7 +66,7 @@ export function LeaderboardTable() {
           table.getRowModel().rows.map((row) => (
             <TableRow key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>
+                <TableCell key={cell.id} className="p-3">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}

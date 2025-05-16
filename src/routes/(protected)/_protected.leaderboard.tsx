@@ -17,7 +17,8 @@ function RouteComponent() {
     <div>
       <PageHeader {...pageHeaderProps} />
       <hr></hr>
-      <div className="container mx-auto max-w-6xl">
+
+      <div className="container mx-auto mt-5">
         <LeaderboardTable />
       </div>
     </div>
