@@ -1,5 +1,6 @@
 import { PageHeader } from "@/components/shared/PageHeader";
 import { CalamityContainer } from "@/features/calamities/components/CalamityContainer";
+import { useGetCalamities } from "@/features/calamities/hooks/useGetCalamities";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(protected)/_protected/")({
@@ -13,11 +14,12 @@ const pageHeaderProps = {
 };
 
 function Index() {
+  const { data: calamities, isLoading } = useGetCalamities();
   return (
     <div>
       <PageHeader {...pageHeaderProps} />
       <hr></hr>
-      <CalamityContainer />
+      <CalamityContainer calamities={calamities} isLoading={isLoading}/>
     </div>
   );
 }

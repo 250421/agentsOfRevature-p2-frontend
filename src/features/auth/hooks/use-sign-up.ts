@@ -9,7 +9,7 @@ export const useSignUp = () => {
     const navigate = useNavigate();
     return useMutation({
         mutationFn: async (values: SignupSchemaType) => {
-            const resp = await axiosInstance.post("auth/sign-up", values);
+            const resp = await axiosInstance.post("auth/signup", values);
             return resp.data;
         }, 
         onSuccess: () => {
