@@ -27,11 +27,14 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/external\/api/, ""),
         },
-        // your Spring Boot auth endpoints
+        // Spring Boot auth endpoints
         "/auth": {
           target: "http://localhost:8080",
           changeOrigin: true,
-          // leave the path as `/auth/…`
+        },
+        '/api': {
+          target: 'http://localhost:8080',
+          changeOrigin: true,
         },
       },
     },
