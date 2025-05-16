@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
-import type { Choice } from "../models/choice";
+import type { Option } from "../models/option";
 
-interface GameChoiceProps {
-    choice: Choice,
-    onClick: (choiceId: string) => void,
+interface GameOptionProps {
+    option: Option,
+    onClick: (optionId: string) => void,
 }
 
-export function GameChoice({ choice, onClick }: GameChoiceProps) {
+export function GameChoice({ option, onClick }: GameOptionProps) {
   return (
-    <Button variant='outline' onClick={() => onClick(choice.id)} className="w-full p-5">
-        <p>{choice.text}</p>
+    <Button variant='outline' onClick={() => onClick(option.id)} className="w-full p-5">
+        <p>{option.text}</p>
     </Button>
   );
 }

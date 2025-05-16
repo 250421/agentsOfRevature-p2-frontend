@@ -1,1 +1,1 @@
-export type SeverityLevel = "critical" | "high" | "medium" | "low"
+export type SeverityLevel = "CRITICAL" | "HIGH" | "MEDIUM" | "LOW"

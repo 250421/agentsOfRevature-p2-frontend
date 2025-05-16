@@ -1,4 +1,4 @@
-export interface Choice {
+export interface Option {
     id: string;
     text: string;
   }

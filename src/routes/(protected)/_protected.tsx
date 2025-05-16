@@ -7,7 +7,7 @@ export const Route = createFileRoute("/(protected)/_protected")({
 });
 
 function ProtectedLayout() {
-  const { data: user, isLoading } = useAuth();
+  const { data: user, isLoading, isError } = useAuth();
 
   if (isLoading)
     return (
@@ -16,7 +16,7 @@ function ProtectedLayout() {
       </div>
     );
 
-  if (!user) {
+  if (!user || isError) {
     return <Navigate to="/sign-in" />;
   }
 

@@ -21,7 +21,7 @@ import { Route as publicPublicSignUpImport } from './routes/(public)/_public.sig
 import { Route as publicPublicSignInImport } from './routes/(public)/_public.sign-in'
 import { Route as protectedProtectedLeaderboardImport } from './routes/(protected)/_protected.leaderboard'
 import { Route as protectedProtectedHeroselectImport } from './routes/(protected)/_protected.heroselect'
-import { Route as protectedProtectedGameChapterIdImport } from './routes/(protected)/_protected.game.$chapterId'
+import { Route as protectedProtectedGameScenarioIdImport } from './routes/(protected)/_protected.game.$scenarioId'
 
 // Create Virtual Routes
 
@@ -88,10 +88,10 @@ const protectedProtectedHeroselectRoute =
     getParentRoute: () => protectedProtectedRoute,
   } as any)
 
-const protectedProtectedGameChapterIdRoute =
-  protectedProtectedGameChapterIdImport.update({
-    id: '/game/$chapterId',
-    path: '/game/$chapterId',
+const protectedProtectedGameScenarioIdRoute =
+  protectedProtectedGameScenarioIdImport.update({
+    id: '/game/$scenarioId',
+    path: '/game/$scenarioId',
     getParentRoute: () => protectedProtectedRoute,
   } as any)
 
@@ -169,11 +169,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof protectedProtectedIndexImport
       parentRoute: typeof protectedProtectedImport
     }
-    '/(protected)/_protected/game/$chapterId': {
-      id: '/(protected)/_protected/game/$chapterId'
-      path: '/game/$chapterId'
-      fullPath: '/game/$chapterId'
-      preLoaderRoute: typeof protectedProtectedGameChapterIdImport
+    '/(protected)/_protected/game/$scenarioId': {
+      id: '/(protected)/_protected/game/$scenarioId'
+      path: '/game/$scenarioId'
+      fullPath: '/game/$scenarioId'
+      preLoaderRoute: typeof protectedProtectedGameScenarioIdImport
       parentRoute: typeof protectedProtectedImport
     }
   }
@@ -185,14 +185,14 @@ interface protectedProtectedRouteChildren {
   protectedProtectedHeroselectRoute: typeof protectedProtectedHeroselectRoute
   protectedProtectedLeaderboardRoute: typeof protectedProtectedLeaderboardRoute
   protectedProtectedIndexRoute: typeof protectedProtectedIndexRoute
-  protectedProtectedGameChapterIdRoute: typeof protectedProtectedGameChapterIdRoute
+  protectedProtectedGameScenarioIdRoute: typeof protectedProtectedGameScenarioIdRoute
 }
 
 const protectedProtectedRouteChildren: protectedProtectedRouteChildren = {
   protectedProtectedHeroselectRoute: protectedProtectedHeroselectRoute,
   protectedProtectedLeaderboardRoute: protectedProtectedLeaderboardRoute,
   protectedProtectedIndexRoute: protectedProtectedIndexRoute,
-  protectedProtectedGameChapterIdRoute: protectedProtectedGameChapterIdRoute,
+  protectedProtectedGameScenarioIdRoute: protectedProtectedGameScenarioIdRoute,
 }
 
 const protectedProtectedRouteWithChildren =
@@ -244,7 +244,7 @@ export interface FileRoutesByFullPath {
   '/leaderboard': typeof protectedProtectedLeaderboardRoute
   '/sign-in': typeof publicPublicSignInRoute
   '/sign-up': typeof publicPublicSignUpRoute
-  '/game/$chapterId': typeof protectedProtectedGameChapterIdRoute
+  '/game/$scenarioId': typeof protectedProtectedGameScenarioIdRoute
 }
 
 export interface FileRoutesByTo {
@@ -254,7 +254,7 @@ export interface FileRoutesByTo {
   '/leaderboard': typeof protectedProtectedLeaderboardRoute
   '/sign-in': typeof publicPublicSignInRoute
   '/sign-up': typeof publicPublicSignUpRoute
-  '/game/$chapterId': typeof protectedProtectedGameChapterIdRoute
+  '/game/$scenarioId': typeof protectedProtectedGameScenarioIdRoute
 }
 
 export interface FileRoutesById {
@@ -269,7 +269,7 @@ export interface FileRoutesById {
   '/(public)/_public/sign-in': typeof publicPublicSignInRoute
   '/(public)/_public/sign-up': typeof publicPublicSignUpRoute
   '/(protected)/_protected/': typeof protectedProtectedIndexRoute
-  '/(protected)/_protected/game/$chapterId': typeof protectedProtectedGameChapterIdRoute
+  '/(protected)/_protected/game/$scenarioId': typeof protectedProtectedGameScenarioIdRoute
 }
 
 export interface FileRouteTypes {
@@ -281,7 +281,7 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/sign-in'
     | '/sign-up'
-    | '/game/$chapterId'
+    | '/game/$scenarioId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/profile'
@@ -290,7 +290,7 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/sign-in'
     | '/sign-up'
-    | '/game/$chapterId'
+    | '/game/$scenarioId'
   id:
     | '__root__'
     | '/(protected)'
@@ -303,7 +303,7 @@ export interface FileRouteTypes {
     | '/(public)/_public/sign-in'
     | '/(public)/_public/sign-up'
     | '/(protected)/_protected/'
-    | '/(protected)/_protected/game/$chapterId'
+    | '/(protected)/_protected/game/$scenarioId'
   fileRoutesById: FileRoutesById
 }
 
@@ -345,7 +345,7 @@ export const routeTree = rootRoute
         "/(protected)/_protected/heroselect",
         "/(protected)/_protected/leaderboard",
         "/(protected)/_protected/",
-        "/(protected)/_protected/game/$chapterId"
+        "/(protected)/_protected/game/$scenarioId"
       ]
     },
     "/(protected)/profile": {
@@ -386,8 +386,8 @@ export const routeTree = rootRoute
       "filePath": "(protected)/_protected.index.tsx",
       "parent": "/(protected)/_protected"
     },
-    "/(protected)/_protected/game/$chapterId": {
-      "filePath": "(protected)/_protected.game.$chapterId.tsx",
+    "/(protected)/_protected/game/$scenarioId": {
+      "filePath": "(protected)/_protected.game.$scenarioId.tsx",
       "parent": "/(protected)/_protected"
     }
   }
