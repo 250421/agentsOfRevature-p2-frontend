@@ -16,6 +16,7 @@ import { usePagination } from '@/hooks/usePagination'
 import { columns, type Hero } from '@/features/heroes/components/columns'
 import { Button } from '@/components/ui/button'
 import { useConfirm } from '@/hooks/use-confirm'
+import { axiosInstance } from '@/lib/axios-config'
 
 async function fetchHeroes(): Promise<Hero[]> {
   const ids = Array.from({ length: 731 }, (_, i) => i + 1)
@@ -82,7 +83,8 @@ export function RouteComponent() {
   const navigate = useNavigate()
   const location = useLocation()
   const params = new URLSearchParams(location.search || '')
-  const calamityId = params.get('calamityId')
+  const calamityIdStr = params.get('calamityId')
+  const calamityId = Number(calamityIdStr);
   const queryClient = useQueryClient()
   const [confirm, ConfirmDialog] = useConfirm()
 
@@ -101,15 +103,30 @@ export function RouteComponent() {
     string[]
   >({
     mutationFn: async (heroNames) => {
-      const res = await fetch("/api/game/deploy", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ calamityId, heroes: heroNames }),
-      });
-      if (!res.ok) throw new Error("Deploy failed");
-      return res.json();
+      // unpack exactly three names
+      const [hero1, hero2, hero3] = heroNames;
+
+      const payload = {
+        calamityId,
+        hero1,
+        hero2,
+        hero3,
+      };
+      console.log(payload)
+      // using your axiosInstance
+      const response = await axiosInstance.post<{ scenarioId: string }>(
+        '/api/scenario',
+        payload
+      );
+
+      return response.data;
+    },
+    onError(err) {
+      console.error('failed to deploy:', err);
+      alert(`Deploy failed: ${err.message}`);
     },
     onSuccess(data) {
+      // navigate to /game/:scenarioId
       navigate({ to: `/game/${data.scenarioId}` });
     },
   });

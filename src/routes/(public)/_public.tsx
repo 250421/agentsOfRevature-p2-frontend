@@ -16,9 +16,9 @@ function PublicLayout() {
       </div>
     );
 
-  // if (user) {
-  //   return <Navigate to="/" />;
-  // }
+  if (user) {
+    return <Navigate to="/" />;
+  }
 
   return <Outlet />;
 }

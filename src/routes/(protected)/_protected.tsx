@@ -16,9 +16,9 @@ function ProtectedLayout() {
       </div>
     );
 
-  // if (!user) {
-  //   return <Navigate to="/sign-in" />;
-  // }
+  if (!user) {
+    return <Navigate to="/sign-in" />;
+  }
 
   return <Outlet />;
 }
