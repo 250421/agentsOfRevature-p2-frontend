@@ -60,7 +60,7 @@ function ProfilePage() {
                     <div className="flex flex-row"><dt>Prestige Points:&nbsp;</dt>
                     <dd>{totalPrestige}</dd></div>
                 </dl>
-                <Button onClick={handleLogOut} variant="outline" className="bg-red-500 text-gray-50">Logout</Button>
+                <Button onClick={handleLogOut} variant="outline" className="bg-red-500 text-gray-50 mt-3">Logout</Button>
             </CardContent>
         </Card>
 
