@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { useSignOut } from '@/features/auth/hooks/use-sign-out'
 import { useConfirm } from '@/hooks/use-confirm'
+import { useUserResults } from '@/features/results/hooks/useUserResults'
 
 export const Route = createFileRoute('/(protected)/profile')({
   component: ProfilePage,
@@ -30,6 +31,20 @@ function ProfilePage() {
         return <div className="p-4 text-center">Loading profile…</div>
     }
 
+    if (!user) {
+        return <Navigate to="/sign-in" />
+    }
+
+    const { data: results = [], isLoading: resultsLoading } =
+    useUserResults(user.id)
+
+    if (resultsLoading) return <div>Loading your stats…</div>
+
+    const totalPrestige = results.reduce((sum, r) => sum + r.repGained, 0)
+    const calamitiesResolved = results.filter((r) => r.didWin).length
+    const calamitiesFailed = results.filter((r) => !r.didWin).length
+    const totalCalamities = calamitiesResolved + calamitiesFailed
+    const resolutionRate = (Math.round((calamitiesResolved/totalCalamities) * 100)).toFixed(2)
 
     return (
         <>
@@ -40,10 +55,10 @@ function ProfilePage() {
             </CardHeader>
             <CardContent>
                 <dl className="grid grid-cols-1 gap-2">
-                    <dt>Display Name</dt>
-                    {/* <dd>{user.username}</dd> */}
-                    <dt>Prestige Points</dt>
-                    <dd>#</dd>
+                    <div className="flex flex-row"><dt>Display Name:&nbsp;</dt>
+                    <dd>{user.username}</dd></div>
+                    <div className="flex flex-row"><dt>Prestige Points:&nbsp;</dt>
+                    <dd>{totalPrestige}</dd></div>
                 </dl>
                 <Button onClick={handleLogOut} variant="outline" className="bg-red-500 text-gray-50">Logout</Button>
             </CardContent>
@@ -82,14 +97,14 @@ function ProfilePage() {
             </CardHeader>
             <CardContent>
                 <dl className="grid grid-cols-1 gap-2">
-                    <dt>Calamities Resolved</dt>
-                    <dd>#</dd>
-                    <dt>Calamities Resolved</dt>
-                    <dd>#</dd>
-                    <dt>Calamaties Failed</dt>
-                    <dd>#</dd>
-                    <dt>Calamity Resolution Rate</dt>
-                    <dd>%</dd>
+                    <div className="flex flex-row"><dt>Total Calamities Attempted:&nbsp;</dt>
+                    <dd>{totalCalamities}</dd></div>
+                    <div className="flex flex-row"><dt>Calamities Resolved:&nbsp;</dt>
+                    <dd>{calamitiesResolved}</dd></div>
+                    <div className="flex flex-row"><dt>Calamaties Failed:&nbsp;</dt>
+                    <dd>{calamitiesFailed}</dd></div>
+                    <div className="flex flex-row"><dt>Calamity Resolution Rate:&nbsp;</dt>
+                    <dd>{resolutionRate}%</dd></div>
                 </dl>
             </CardContent>
         </Card>
