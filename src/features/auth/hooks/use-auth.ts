@@ -7,7 +7,7 @@ export const useAuth = () => {
         queryKey: ["auth"],
         queryFn: async (): Promise <Auth | null> => {
             try{
-                const resp = await axiosInstance.get("/auth");
+                const resp = await axiosInstance.get("/auth/me");
                 return resp.data;
             } catch (error) {
                 console.error(error);
