@@ -24,8 +24,8 @@ export const useOptionSelected = () => {
 
     return useMutation({
         mutationFn: postOptionSelected,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['scenario'] });
+        onSuccess: (data) => {
+            queryClient.setQueryData(['currentScenario'], data);
         }
     })
 }

@@ -9,7 +9,7 @@ const getCurrentScenario = async () => {
 
 export const useGetCurrentScenario = () => {
   return useQuery({
-    queryKey: ["scenario"],
+    queryKey: ["currentScenario"],
     queryFn: getCurrentScenario,
   });
 };

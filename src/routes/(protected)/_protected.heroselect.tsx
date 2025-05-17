@@ -32,7 +32,7 @@ export function RouteComponent() {
   const { data: heroes = [], isLoading } = useQuery<Hero[], Error>({
     queryKey:  ['heroes'],
     queryFn:   fetchHeroes,
-    staleTime: 1000 * 60 * 15,
+    staleTime: 1000 * 60 * 15, // 15 minutes
   })
 
   const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({})
@@ -108,7 +108,8 @@ export function RouteComponent() {
       console.error('failed to deploy:', err);
       alert(`Deploy failed: ${err.message}`);
     },
-    onSuccess() {
+    onSuccess(data) {
+      queryClient.setQueryData(['currentScenario'], data)
       navigate({ to: '/game' });
     },
   });
