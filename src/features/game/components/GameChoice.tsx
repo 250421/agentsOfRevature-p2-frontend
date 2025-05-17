@@ -3,7 +3,7 @@ import type { Option } from "../models/option";
 
 interface GameOptionProps {
     option: Option,
-    onClick: (optionId: string) => void,
+    onClick: (selectedOptionId: string) => void,
 }
 
 export function GameChoice({ option, onClick }: GameOptionProps) {

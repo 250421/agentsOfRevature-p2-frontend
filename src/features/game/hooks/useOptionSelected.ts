@@ -3,17 +3,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface PostOptionSelectedParams {
     scenarioId: string,
-    optionId: string,
+    selectedOptionId: string,
 }
 
 interface PostOptionSelectedPayload {
-    optionId: string,
+    selectedOptionId: string,
 }
 
 const postOptionSelected = async (params: PostOptionSelectedParams) => {
-    const { scenarioId, optionId } = params;
+    const { scenarioId, selectedOptionId } = params;
 
-    const payload: PostOptionSelectedPayload = { optionId };
+    const payload: PostOptionSelectedPayload = { selectedOptionId };
     const resp = await axiosInstance.patch(`/api/scenario/${scenarioId}`, payload);
 
     return resp.data;
