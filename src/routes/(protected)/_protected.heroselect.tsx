@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button'
 import { useConfirm } from '@/hooks/use-confirm'
 import { axiosInstance } from '@/lib/axios-config'
 import axios from 'axios'
+import { TransitionScreen } from '@/components/shared/TransitionScreen'
 
 
 async function fetchHeroes(): Promise<Hero[]> {
@@ -123,7 +124,11 @@ export function RouteComponent() {
     // if exactly 3, trigger
     deployMutation.mutate(selectedNames)
   }
-  
+
+  if (deployMutation.isPending) {
+    return <TransitionScreen text="Deploying your heroes..." />;
+  }
+
   if (isLoading) {
     return <div>Loading…</div>
   }
