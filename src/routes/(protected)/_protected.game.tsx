@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { GameChoiceContainer } from "@/features/game/components/GameChoiceContainer";
 import { GameText } from "@/features/game/components/GameText";
 import { useOptionSelected } from "@/features/game/hooks/useOptionSelected";
@@ -14,23 +14,32 @@ export const Route = createFileRoute("/(protected)/_protected/game")(
 );
 
 function RouteComponent() {
-  const { data: scenario, isLoading: scenarioIsLoading, isError, error } = useGetCurrentScenario();
+  const { data: scenario, isLoading: scenarioIsLoading } = useGetCurrentScenario();
   const optionSelected = useOptionSelected();
-
-  if (optionSelected.isPending) {
-    return <TransitionScreen text="Advancing to the next chapter..." />;
-  }
+  const navigate = useNavigate();
 
   if (scenarioIsLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <Loader2 className="animate-spin h-10 w-10"/>
+        <Loader2 className="animate-spin h-10 w-10" />
       </div>
     );
   }
 
+  if (optionSelected.isPending) {
+    if (scenario.chapterCount === 5) {
+      return <TransitionScreen text="Game Completed! Loading results..." />;
+    }
+
+    return <TransitionScreen text="Advancing to the next chapter..." />;
+  }
+
+  if (scenario.chapterCount === 6 || scenario.closing !== null) {
+    navigate({ to: '/gameresults', state: { closing: scenario.closing } });
+  }
+
   const currentStoryPoint = scenario.storyPoints[scenario.chapterCount - 1];
-  
+
   const handleOptionSelect = (selectedOptionId: string) => {
     optionSelected.mutate({ scenarioId: scenario.id, selectedOptionId });
   };
@@ -39,7 +48,7 @@ function RouteComponent() {
     <div>
       <PageHeader primaryText={scenario.title} />
       <div className="container mx-auto max-w-4xl">
-        <GameText gameText={currentStoryPoint.text} chapter={scenario.chapterCount}/>
+        <GameText gameText={currentStoryPoint.text} chapter={scenario.chapterCount} />
         <GameChoiceContainer
           options={currentStoryPoint.options}
           onOptionSelect={handleOptionSelect}
