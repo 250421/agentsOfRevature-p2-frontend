@@ -35,6 +35,7 @@ function RouteComponent() {
   }
 
   if (scenario.chapterCount === 6 || scenario.closing !== null) {
+    // @ts-ignore
     navigate({ to: '/gameresults', state: { closing: scenario.closing } });
   } else {
     const currentStoryPoint = scenario.storyPoints[scenario.chapterCount - 1];

@@ -12,10 +12,10 @@ export function SeverityBadge({ severity }: SeverityBadgeProps) {
         <Badge className={cn(
             "",
             {
-                "bg-purple-700": severity === "critical",
-                "bg-red-600": severity === "high",
-                "bg-orange-400": severity === "medium",
-                "bg-yellow-400": severity === "low",
+                "bg-purple-700": severity === "CRITICAL",
+                "bg-red-600": severity === "HIGH",
+                "bg-orange-400": severity === "MEDIUM",
+                "bg-yellow-400": severity === "LOW",
             }
         )}>Severity: {severity.toUpperCase()}</Badge>
     )
