@@ -41,8 +41,8 @@ function SignInPage() {
     }
 
     return (
-    <Card className = "width-[400px]">
-        <CardHeader>
+    <Card className = "w-1/3 mx-auto">
+        <CardHeader className = "text-center">
         <CardTitle className = "font-bold text-2xl">Sign In</CardTitle>
         <CardDescription>Please fill in the details below:</CardDescription>
         </CardHeader>
@@ -76,11 +76,11 @@ function SignInPage() {
                 </FormItem>
                 )}
             />
-            <Button type="submit" style={{ color: "#FEFAE0", backgroundColor: "#283618" }}>Submit</Button>
+            <Button type="submit" className = "w-max mx-auto">Submit</Button>
             </form>
         </Form>
 
-        <div className="flex items-center gap-x-2 pt-4">
+        <div className="flex items-center gap-x-2 pt-4 flex justify-center">
             <p>Don&apos;t have an account?</p>
             <Link to={"/sign-up"} className="text-blue-500 underline">
                 Sign Up
