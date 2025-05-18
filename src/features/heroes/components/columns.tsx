@@ -1,15 +1,15 @@
-"use client"
-
 import type { ColumnDef } from "@tanstack/react-table"
 import { Checkbox } from "@/components/ui/checkbox"
 
 export type Hero = {
-  id: number
-  alias: string
-  strength: number
-  speed: number
-  power: number
-  combat: number
+  id: number;
+  name: string;
+  powerstats: {
+    strength: number;
+    speed: number;
+    power: number;
+    combat: number;
+  };
 }
 
 export const columns: ColumnDef<Hero>[] = [
@@ -36,24 +36,24 @@ export const columns: ColumnDef<Hero>[] = [
         enableHiding: false,
     },
     {
-        accessorKey: "alias",
-        header: "Alias",
+        accessorKey: "name",
+        header: "Name",
         filterFn: "includesString",
     },
     {
-        accessorKey: "strength",
+        accessorKey: "powerstats.strength",
         header: "Strength",
     },
     {
-        accessorKey: "speed",
+        accessorKey: "powerstats.speed",
         header: "Speed",
     },
     {
-        accessorKey: "power",
+        accessorKey: "powerstats.power",
         header: "Power",
     },
     {
-        accessorKey: "combat",
+        accessorKey: "powerstats.combat",
         header: "Combat",
     },
 ]

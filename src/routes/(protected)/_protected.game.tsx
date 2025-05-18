@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/shared/PageHeader";
 import { useGetCurrentScenario } from "@/features/game/hooks/useGetCurrentScenario";
 import { Loader2 } from "lucide-react";
 
-export const Route = createFileRoute("/(protected)/_protected/game/$scenarioId")(
+export const Route = createFileRoute("/(protected)/_protected/game")(
   {
     component: RouteComponent,
   }
@@ -14,12 +14,7 @@ export const Route = createFileRoute("/(protected)/_protected/game/$scenarioId")
 
 function RouteComponent() {
   const { data: scenario, isLoading } = useGetCurrentScenario();
-  const options = scenario.storypoints[scenario.storypoints.chapterNumber - 1].options
   const optionSelected = useOptionSelected();
-
-  const handleOptionSelect = (optionId: string) => {
-    optionSelected.mutate({ scenarioId: scenario.id, optionId });
-  };
 
   if (isLoading) {
     return (
@@ -29,13 +24,19 @@ function RouteComponent() {
     )
   }
 
+  const currentStoryPoint = scenario.storyPoints[scenario.chapterCount - 1];
+  
+  const handleOptionSelect = (selectedOptionId: string) => {
+    optionSelected.mutate({ scenarioId: scenario.id, selectedOptionId });
+  };
+
   return (
     <div>
       <PageHeader primaryText={scenario.title} />
       <div className="container mx-auto max-w-4xl">
-        <GameText gameText={scenario.text} />
+        <GameText gameText={currentStoryPoint.text} chapter={scenario.chapterCount}/>
         <GameChoiceContainer
-          options={options}
+          options={currentStoryPoint.options}
           onOptionSelect={handleOptionSelect}
         />
       </div>

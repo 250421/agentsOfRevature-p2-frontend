@@ -1,5 +1,3 @@
-'use client'
-
 import { createFileRoute, useLocation, useNavigate } from '@tanstack/react-router'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
@@ -17,27 +15,13 @@ import { columns, type Hero } from '@/features/heroes/components/columns'
 import { Button } from '@/components/ui/button'
 import { useConfirm } from '@/hooks/use-confirm'
 import { axiosInstance } from '@/lib/axios-config'
+import axios from 'axios'
+
 
 async function fetchHeroes(): Promise<Hero[]> {
-  const ids = Array.from({ length: 731 }, (_, i) => i + 1)
-  const rows = await Promise.all(
-    ids.map(async (id) => {
-      const res  = await fetch(`/external/api/${id}`)
-      if (!res.ok) return null
-      const json = await res.json()
-      if (json.response === 'error') return null
+  const response = await axios.get('https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/all.json'); 
 
-      return {
-        id:       Number(json.id),
-        alias:    json.name,
-        strength: Number(json.powerstats.strength),
-        speed:    Number(json.powerstats.speed),
-        power:    Number(json.powerstats.power),
-        combat:   Number(json.powerstats.combat),
-      } as Hero
-    }),
-  )
-  return rows.filter((r): r is Hero => r !== null)
+  return response.data;
 }
 
 export const Route = createFileRoute('/(protected)/_protected/heroselect')({
@@ -48,7 +32,7 @@ export function RouteComponent() {
   const { data: heroes = [], isLoading } = useQuery<Hero[], Error>({
     queryKey:  ['heroes'],
     queryFn:   fetchHeroes,
-    staleTime: 1000 * 60 * 15,
+    staleTime: 1000 * 60 * 15, // 15 minutes
   })
 
   const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({})
@@ -92,9 +76,8 @@ export function RouteComponent() {
   const selectedRows = table
   .getSelectedRowModel()
   .rows.map(r => r.original)
-  const selectedNames = selectedRows.map(h => h.alias)
+  const selectedNames = selectedRows.map(h => h.name)
   const selectedCount = table.getSelectedRowModel().rows.length
-  const canContinue = selectedCount === 3
 
   // POST to backend
   const deployMutation = useMutation<
@@ -126,8 +109,8 @@ export function RouteComponent() {
       alert(`Deploy failed: ${err.message}`);
     },
     onSuccess(data) {
-      // navigate to /game/:scenarioId
-      navigate({ to: `/game/${data.scenarioId}` });
+      queryClient.setQueryData(['currentScenario'], data)
+      navigate({ to: '/game' });
     },
   });
 
@@ -164,8 +147,8 @@ export function RouteComponent() {
 
         <Input
           placeholder="Search for a hero"
-          value={(table.getColumn('alias')?.getFilterValue() as string) ?? ''}
-          onChange={(e) => table.getColumn('alias')?.setFilterValue(e.target.value)}
+          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+          onChange={(e) => table.getColumn('name')?.setFilterValue(e.target.value)}
           className="max-w-sm"
         />
 
@@ -207,16 +190,7 @@ export function RouteComponent() {
 
     <ConfirmDialog
       title="Deploy Heroes?"
-      description={
-        <>
-          You're about to deploy these three heroes:
-          <ul className="list-disc ml-6 mt-2">
-          {selectedNames.map((heroName) => (
-            <li key={heroName}>{heroName}</li>
-          ))}
-          </ul>
-        </>
-      }
+      description={`You're about to deploy these three heroes: ${selectedNames[0]}, ${selectedNames[1]}, and ${selectedNames[2]}.`}
       confirmLabel="Yes, Deploy"
       cancelLabel="Cancel"
       destructive={false}
