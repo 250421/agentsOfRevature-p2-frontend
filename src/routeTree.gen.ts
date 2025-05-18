@@ -14,11 +14,11 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as publicPublicImport } from './routes/(public)/_public'
-import { Route as protectedProfileImport } from './routes/(protected)/profile'
 import { Route as protectedProtectedImport } from './routes/(protected)/_protected'
 import { Route as protectedProtectedIndexImport } from './routes/(protected)/_protected.index'
 import { Route as publicPublicSignUpImport } from './routes/(public)/_public.sign-up'
 import { Route as publicPublicSignInImport } from './routes/(public)/_public.sign-in'
+import { Route as protectedProtectedProfileImport } from './routes/(protected)/_protected.profile'
 import { Route as protectedProtectedLeaderboardImport } from './routes/(protected)/_protected.leaderboard'
 import { Route as protectedProtectedHeroselectImport } from './routes/(protected)/_protected.heroselect'
 import { Route as protectedProtectedGameresultsImport } from './routes/(protected)/_protected.gameresults'
@@ -46,12 +46,6 @@ const publicPublicRoute = publicPublicImport.update({
   getParentRoute: () => publicRoute,
 } as any)
 
-const protectedProfileRoute = protectedProfileImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => protectedRoute,
-} as any)
-
 const protectedProtectedRoute = protectedProtectedImport.update({
   id: '/_protected',
   getParentRoute: () => protectedRoute,
@@ -73,6 +67,12 @@ const publicPublicSignInRoute = publicPublicSignInImport.update({
   id: '/sign-in',
   path: '/sign-in',
   getParentRoute: () => publicPublicRoute,
+} as any)
+
+const protectedProtectedProfileRoute = protectedProtectedProfileImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => protectedProtectedRoute,
 } as any)
 
 const protectedProtectedLeaderboardRoute =
@@ -120,13 +120,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof protectedProtectedImport
       parentRoute: typeof protectedRoute
     }
-    '/(protected)/profile': {
-      id: '/(protected)/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof protectedProfileImport
-      parentRoute: typeof protectedImport
-    }
     '/(public)': {
       id: '/(public)'
       path: '/'
@@ -169,6 +162,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof protectedProtectedLeaderboardImport
       parentRoute: typeof protectedProtectedImport
     }
+    '/(protected)/_protected/profile': {
+      id: '/(protected)/_protected/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof protectedProtectedProfileImport
+      parentRoute: typeof protectedProtectedImport
+    }
     '/(public)/_public/sign-in': {
       id: '/(public)/_public/sign-in'
       path: '/sign-in'
@@ -200,6 +200,7 @@ interface protectedProtectedRouteChildren {
   protectedProtectedGameresultsRoute: typeof protectedProtectedGameresultsRoute
   protectedProtectedHeroselectRoute: typeof protectedProtectedHeroselectRoute
   protectedProtectedLeaderboardRoute: typeof protectedProtectedLeaderboardRoute
+  protectedProtectedProfileRoute: typeof protectedProtectedProfileRoute
   protectedProtectedIndexRoute: typeof protectedProtectedIndexRoute
 }
 
@@ -208,6 +209,7 @@ const protectedProtectedRouteChildren: protectedProtectedRouteChildren = {
   protectedProtectedGameresultsRoute: protectedProtectedGameresultsRoute,
   protectedProtectedHeroselectRoute: protectedProtectedHeroselectRoute,
   protectedProtectedLeaderboardRoute: protectedProtectedLeaderboardRoute,
+  protectedProtectedProfileRoute: protectedProtectedProfileRoute,
   protectedProtectedIndexRoute: protectedProtectedIndexRoute,
 }
 
@@ -216,12 +218,10 @@ const protectedProtectedRouteWithChildren =
 
 interface protectedRouteChildren {
   protectedProtectedRoute: typeof protectedProtectedRouteWithChildren
-  protectedProfileRoute: typeof protectedProfileRoute
 }
 
 const protectedRouteChildren: protectedRouteChildren = {
   protectedProtectedRoute: protectedProtectedRouteWithChildren,
-  protectedProfileRoute: protectedProfileRoute,
 }
 
 const protectedRouteWithChildren = protectedRoute._addFileChildren(
@@ -255,22 +255,22 @@ const publicRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '/': typeof protectedProtectedIndexRoute
-  '/profile': typeof protectedProfileRoute
   '/game': typeof protectedProtectedGameRoute
   '/gameresults': typeof protectedProtectedGameresultsRoute
   '/heroselect': typeof protectedProtectedHeroselectRoute
   '/leaderboard': typeof protectedProtectedLeaderboardRoute
+  '/profile': typeof protectedProtectedProfileRoute
   '/sign-in': typeof publicPublicSignInRoute
   '/sign-up': typeof publicPublicSignUpRoute
 }
 
 export interface FileRoutesByTo {
-  '/profile': typeof protectedProfileRoute
   '/': typeof protectedProtectedIndexRoute
   '/game': typeof protectedProtectedGameRoute
   '/gameresults': typeof protectedProtectedGameresultsRoute
   '/heroselect': typeof protectedProtectedHeroselectRoute
   '/leaderboard': typeof protectedProtectedLeaderboardRoute
+  '/profile': typeof protectedProtectedProfileRoute
   '/sign-in': typeof publicPublicSignInRoute
   '/sign-up': typeof publicPublicSignUpRoute
 }
@@ -279,13 +279,13 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/(protected)': typeof protectedRouteWithChildren
   '/(protected)/_protected': typeof protectedProtectedRouteWithChildren
-  '/(protected)/profile': typeof protectedProfileRoute
   '/(public)': typeof publicRouteWithChildren
   '/(public)/_public': typeof publicPublicRouteWithChildren
   '/(protected)/_protected/game': typeof protectedProtectedGameRoute
   '/(protected)/_protected/gameresults': typeof protectedProtectedGameresultsRoute
   '/(protected)/_protected/heroselect': typeof protectedProtectedHeroselectRoute
   '/(protected)/_protected/leaderboard': typeof protectedProtectedLeaderboardRoute
+  '/(protected)/_protected/profile': typeof protectedProtectedProfileRoute
   '/(public)/_public/sign-in': typeof publicPublicSignInRoute
   '/(public)/_public/sign-up': typeof publicPublicSignUpRoute
   '/(protected)/_protected/': typeof protectedProtectedIndexRoute
@@ -295,34 +295,34 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/profile'
     | '/game'
     | '/gameresults'
     | '/heroselect'
     | '/leaderboard'
+    | '/profile'
     | '/sign-in'
     | '/sign-up'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/profile'
     | '/'
     | '/game'
     | '/gameresults'
     | '/heroselect'
     | '/leaderboard'
+    | '/profile'
     | '/sign-in'
     | '/sign-up'
   id:
     | '__root__'
     | '/(protected)'
     | '/(protected)/_protected'
-    | '/(protected)/profile'
     | '/(public)'
     | '/(public)/_public'
     | '/(protected)/_protected/game'
     | '/(protected)/_protected/gameresults'
     | '/(protected)/_protected/heroselect'
     | '/(protected)/_protected/leaderboard'
+    | '/(protected)/_protected/profile'
     | '/(public)/_public/sign-in'
     | '/(public)/_public/sign-up'
     | '/(protected)/_protected/'
@@ -356,8 +356,7 @@ export const routeTree = rootRoute
     "/(protected)": {
       "filePath": "(protected)",
       "children": [
-        "/(protected)/_protected",
-        "/(protected)/profile"
+        "/(protected)/_protected"
       ]
     },
     "/(protected)/_protected": {
@@ -368,12 +367,9 @@ export const routeTree = rootRoute
         "/(protected)/_protected/gameresults",
         "/(protected)/_protected/heroselect",
         "/(protected)/_protected/leaderboard",
+        "/(protected)/_protected/profile",
         "/(protected)/_protected/"
       ]
-    },
-    "/(protected)/profile": {
-      "filePath": "(protected)/profile.tsx",
-      "parent": "/(protected)"
     },
     "/(public)": {
       "filePath": "(public)",
@@ -403,6 +399,10 @@ export const routeTree = rootRoute
     },
     "/(protected)/_protected/leaderboard": {
       "filePath": "(protected)/_protected.leaderboard.tsx",
+      "parent": "/(protected)/_protected"
+    },
+    "/(protected)/_protected/profile": {
+      "filePath": "(protected)/_protected.profile.tsx",
       "parent": "/(protected)/_protected"
     },
     "/(public)/_public/sign-in": {

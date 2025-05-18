@@ -11,7 +11,7 @@ import { useSignOut } from '@/features/auth/hooks/use-sign-out'
 import { useConfirm } from '@/hooks/use-confirm'
 import { useUserResults } from '@/features/results/hooks/useUserResults'
 
-export const Route = createFileRoute('/(protected)/profile')({
+export const Route = createFileRoute('/(protected)/_protected/profile')({
   component: ProfilePage,
 })
 

@@ -1,4 +1,5 @@
 import { axiosInstance } from "@/lib/axios-config";
+import { setState } from "@/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { AxiosError } from "axios";
@@ -17,6 +18,7 @@ export const useSignOut = () => {
             queryClient.invalidateQueries({
                 queryKey: ["auth"],
             });
+            setState({ loggedIn: false, username: '' });
             toast.success("Logged out successfully");
             navigate({ to: "/sign-in" });
         },
