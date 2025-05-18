@@ -17,11 +17,10 @@ import { ArrowDownUp, ArrowDownWideNarrow, ArrowUpNarrowWide } from "lucide-reac
 import { cn } from "@/lib/utils";
 
 
-const CURRENT_USER_ID = 6; // todo: change to logged in user id
 export function LeaderboardTable() {
   const table = useReactTable({
     columns,
-    data, // todo: change to data from backend
+    data,
     initialState: {
       sorting: [
         {

@@ -4,6 +4,7 @@ import { axiosInstance } from "@/lib/axios-config";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { AxiosError } from "axios";
+import { setState } from "@/store";
 
 export const useSignIn = () => {
     const navigate = useNavigate();
@@ -14,6 +15,7 @@ export const useSignIn = () => {
             
         },
         onSuccess: () => {
+            setState({ loggedIn: true, username: '' });
             toast.success("User logged in");
             navigate({ to: "/"});
         },

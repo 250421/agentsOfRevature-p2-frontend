@@ -35,25 +35,26 @@ function RouteComponent() {
   }
 
   if (scenario.chapterCount === 6 || scenario.closing !== null) {
+    // @ts-ignore
     navigate({ to: '/gameresults', state: { closing: scenario.closing } });
-  }
+  } else {
+    const currentStoryPoint = scenario.storyPoints[scenario.chapterCount - 1];
 
-  const currentStoryPoint = scenario.storyPoints[scenario.chapterCount - 1];
+    const handleOptionSelect = (selectedOptionId: string) => {
+      optionSelected.mutate({ scenarioId: scenario.id, selectedOptionId });
+    };
 
-  const handleOptionSelect = (selectedOptionId: string) => {
-    optionSelected.mutate({ scenarioId: scenario.id, selectedOptionId });
-  };
-
-  return (
-    <div>
-      <PageHeader primaryText={scenario.title} />
-      <div className="container mx-auto max-w-4xl">
-        <GameText gameText={currentStoryPoint.text} chapter={scenario.chapterCount} />
-        <GameChoiceContainer
-          options={currentStoryPoint.options}
-          onOptionSelect={handleOptionSelect}
-        />
+    return (
+      <div>
+        <PageHeader primaryText={scenario.title} />
+        <div className="container mx-auto max-w-4xl">
+          <GameText gameText={currentStoryPoint.text} chapter={scenario.chapterCount} />
+          <GameChoiceContainer
+            options={currentStoryPoint.options}
+            onOptionSelect={handleOptionSelect}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
