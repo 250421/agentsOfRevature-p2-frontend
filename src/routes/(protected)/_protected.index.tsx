@@ -1,20 +1,25 @@
-import { CalamityContainer } from '@/features/calamities/components/CalamityContainer'
-import { createFileRoute } from '@tanstack/react-router'
+import { PageHeader } from "@/components/shared/PageHeader";
+import { CalamityContainer } from "@/features/calamities/components/CalamityContainer";
+import { useGetCalamities } from "@/features/calamities/hooks/useGetCalamities";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/(protected)/_protected/')({
+export const Route = createFileRoute("/(protected)/_protected/")({
   component: Index,
-})
+});
+
+const pageHeaderProps = {
+  primaryText: "Active Calamities",
+  secondaryText:
+    "Greetings, agent 'username'. Choose your next assignment wisely.",
+};
 
 function Index() {
-  
+  const { data: calamities, isLoading } = useGetCalamities();
   return (
-    <div className=''>
-      <div className='text-center'>
-        <h1 className='text-4xl mt-5'><strong>Active Calamities</strong></h1>
-        <p className='text-md p-6'>Greetings, agent 'username'. Choose your next assignment wisely.</p>
-        <hr></hr>
-      </div>
-      <CalamityContainer/>
+    <div>
+      <PageHeader {...pageHeaderProps} />
+      <hr></hr>
+      <CalamityContainer calamities={calamities} isLoading={isLoading}/>
     </div>
-  )
+  );
 }

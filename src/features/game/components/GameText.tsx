@@ -3,20 +3,23 @@ import { Separator } from "@/components/ui/separator";
 
 interface GameTextProps {
   gameText: string,
+  chapter: number,
 }
 
-export function GameText({ gameText }: GameTextProps) {
+export function GameText({ gameText, chapter }: GameTextProps) {
   return (
     <div className="min-w-min">
-      <Card className="border-5">
-        <CardHeader className="flex flex-row items-center">
-          <CardTitle>The Current Situation</CardTitle>
+      <Card className="border mb-10">
+        <CardHeader>
+          <CardTitle className="flex justify-between text-md">
+            <span>The Current Situation</span>
+            <span>Chapter {chapter}/5</span>
+          </CardTitle>
         </CardHeader>
         <Separator />
         <CardContent>
-          <p>
-            {gameText ||
-              "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et fugit eveniet temporibus, quod aliquam totam ipsam. Veniam illo nisi voluptates distinctio non at dolor! Nihil dolore est deleniti mollitia autem?"}
+          <p className="text-md leading-relaxed">
+            {gameText}
           </p>
         </CardContent>
       </Card>

@@ -10,7 +10,7 @@ export const useSignOut = () => {
 
     return useMutation({
         mutationFn: async () => {
-            const resp = await axiosInstance.post("/auth/sign-out");
+            const resp = await axiosInstance.post("/auth/logout");
             return resp.data;
         },
         onSuccess: () => {

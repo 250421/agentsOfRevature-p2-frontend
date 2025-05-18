@@ -82,7 +82,7 @@ function SignInPage() {
 
         <div className="flex items-center gap-x-2 pt-4">
             <p>Don&apos;t have an account?</p>
-            <Link to={"/sign-in"} className="text-blue-500 underline">
+            <Link to={"/sign-up"} className="text-blue-500 underline">
                 Sign Up
             </Link>
         </div>
