@@ -1,5 +1,5 @@
-# Use Node.js 18 as the base image
-FROM node:18-alpine
+# Build stage
+FROM node:18-alpine AS build
 
 # Install pnpm
 RUN npm install -g pnpm
@@ -19,11 +19,20 @@ COPY . .
 # Build the application
 RUN pnpm build
 
-# Install serve to run the application
-RUN pnpm add -g serve
+# Production stage
+FROM node:18-alpine
 
-# Expose port 3000
-EXPOSE 3000
+# Install serve to run the application
+RUN npm install -g serve
+
+# Set working directory
+WORKDIR /app
+
+# Copy built assets from build stage
+COPY --from=build /app/dist ./dist
+
+# Expose port 8082 (matching backend configuration)
+EXPOSE 8082
 
 # Start the application
-CMD ["serve", "-s", "dist", "-l", "3000"] 
+CMD ["serve", "-s", "dist", "-l", "8082"] 
