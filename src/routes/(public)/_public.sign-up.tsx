@@ -42,9 +42,9 @@ function SignUpPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-xl">
-      <Card className="width-[400px] bg-slate-800 text-slate-100">
-        <CardHeader>
+    <div className="container mx-auto w-1/3">
+      <Card className="bg-slate-800 text-slate-100">
+        <CardHeader className = "text-center">
           <CardTitle className="font-bold text-2xl">Sign Up</CardTitle>
           <CardDescription>Please fill in the details below:</CardDescription>
         </CardHeader>
@@ -65,26 +65,26 @@ function SignUpPage() {
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" placeholder="Password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button className='bg-blue-500' type="submit">Submit</Button>
-            </form>
-          </Form>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input type="password" placeholder="Password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" className = "w-max mx-auto bg-blue-500">Submit</Button>
+          </form>
+        </Form>
 
-          <div className="flex items-center gap-x-2 pt-4">
-            <p>Already have an account?</p>
-            <Link to={"/sign-in"} className="text-blue-500 underline">
+        <div className="flex items-center gap-x-2 pt-4 flex justify-center">
+          <p>Already have an account?</p>
+          <Link to={"/sign-in"} className="text-blue-500 underline">
               Sign In
             </Link>
           </div>

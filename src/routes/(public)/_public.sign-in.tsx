@@ -40,9 +40,9 @@ function SignInPage() {
     }
 
     return (
-        <div className="container mx-auto max-w-xl">
-            <Card className="width-[400px] bg-slate-800 text-slate-100">
-                <CardHeader>
+        <div className="container mx-auto w-1/3">
+            <Card className="bg-slate-800 text-slate-100">
+                <CardHeader className="text-center">
                     <CardTitle className="font-bold text-2xl">Sign In</CardTitle>
                     <CardDescription>Please fill in the details below:</CardDescription>
                 </CardHeader>
@@ -76,11 +76,11 @@ function SignInPage() {
                                     </FormItem>
                                 )}
                             />
-                            <Button className='bg-blue-500' type="submit">Submit</Button>
+                            <Button type="submit" className="w-max mx-auto bg-blue-500">Submit</Button>
                         </form>
                     </Form>
 
-                    <div className="flex items-center gap-x-2 pt-4">
+                    <div className="flex items-center gap-x-2 pt-4 flex justify-center">
                         <p>Don&apos;t have an account?</p>
                         <Link to={"/sign-up"} className="text-blue-500 underline">
                             Sign Up
