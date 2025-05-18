@@ -48,7 +48,7 @@ function ProfilePage() {
 
     return (
         <>
-        <div className="min-h-screen bg-gray-50 py-8 flex flex-col items-center gap-6 px-4">
+        <div className="min-h-screen bg-slate-900 py-8 flex flex-col items-center gap-6 px-4">
         <Card className="w-1/2">
             <CardHeader>
                 <CardTitle>Your Profile</CardTitle>

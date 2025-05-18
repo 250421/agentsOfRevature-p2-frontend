@@ -42,27 +42,28 @@ function SignUpPage() {
   }
 
   return (
-    <Card className = "w-1/3 mx-auto">
-      <CardHeader className = "text-center">
-        <CardTitle className = "font-bold text-2xl">Sign Up</CardTitle>
-        <CardDescription>Please fill in the details below:</CardDescription>
-      </CardHeader>
-      <CardContent>
+    <div className="container mx-auto w-1/3">
+      <Card className="bg-slate-800 text-slate-100">
+        <CardHeader className = "text-center">
+          <CardTitle className="font-bold text-2xl">Sign Up</CardTitle>
+          <CardDescription>Please fill in the details below:</CardDescription>
+        </CardHeader>
+        <CardContent>
           <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-6">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Username" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-6">
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Username" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
             <FormField
               control={form.control}
@@ -77,7 +78,7 @@ function SignUpPage() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className = "w-max mx-auto">Submit</Button>
+            <Button type="submit" className = "w-max mx-auto bg-blue-500">Submit</Button>
           </form>
         </Form>
 
@@ -85,9 +86,10 @@ function SignUpPage() {
           <p>Already have an account?</p>
           <Link to={"/sign-in"} className="text-blue-500 underline">
               Sign In
-          </Link>
-        </div>
-      </CardContent>
-    </Card>
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

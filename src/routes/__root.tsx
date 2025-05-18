@@ -6,12 +6,12 @@ import { NavBar } from '@/components/shared/NavBar'
 
 export const Route = createRootRoute({
   component: () => (
-    <>
+    <div>
       <NavBar />
 
       <Toaster />
       <Outlet />
       <TanStackRouterDevtools />
-    </>
+    </div>
   ),
 })

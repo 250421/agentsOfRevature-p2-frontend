@@ -1,20 +1,20 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
 } from "@/components/ui/card"
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from '@/components/ui/button';
@@ -24,10 +24,9 @@ import { useSignIn } from '@/features/auth/hooks/use-sign-in';
 export const Route = createFileRoute('/(public)/_public/sign-in')({
     component: SignInPage,
 })
-  
 
 function SignInPage() {
-    const {mutate: login } = useSignIn();
+    const { mutate: login } = useSignIn();
     const form = useForm<SignInSchemaType>({
         resolver: zodResolver(signinSchema),
         defaultValues: {
@@ -41,56 +40,54 @@ function SignInPage() {
     }
 
     return (
-    <Card className = "w-1/3 mx-auto">
-        <CardHeader className = "text-center">
-        <CardTitle className = "font-bold text-2xl">Sign In</CardTitle>
-        <CardDescription>Please fill in the details below:</CardDescription>
-        </CardHeader>
-        <CardContent>
-            <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-6">
-            <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                    <Input placeholder="Username" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                </FormItem>
-                )}
-            />
+        <div className="container mx-auto w-1/3">
+            <Card className="bg-slate-800 text-slate-100">
+                <CardHeader className="text-center">
+                    <CardTitle className="font-bold text-2xl">Sign In</CardTitle>
+                    <CardDescription>Please fill in the details below:</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-6">
+                            <FormField
+                                control={form.control}
+                                name="username"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Username</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Username" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
 
-            <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                    <Input type="password" placeholder="Password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                </FormItem>
-                )}
-            />
-            <Button type="submit" className = "w-max mx-auto">Submit</Button>
-            </form>
-        </Form>
+                            <FormField
+                                control={form.control}
+                                name="password"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Password</FormLabel>
+                                        <FormControl>
+                                            <Input type="password" placeholder="Password" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button type="submit" className="w-max mx-auto bg-blue-500">Submit</Button>
+                        </form>
+                    </Form>
 
-        <div className="flex items-center gap-x-2 pt-4 flex justify-center">
-            <p>Don&apos;t have an account?</p>
-            <Link to={"/sign-up"} className="text-blue-500 underline">
-                Sign Up
-            </Link>
+                    <div className="flex items-center gap-x-2 pt-4 flex justify-center">
+                        <p>Don&apos;t have an account?</p>
+                        <Link to={"/sign-up"} className="text-blue-500 underline">
+                            Sign Up
+                        </Link>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
-        </CardContent>
-    </Card>
     );
-
-    
-
-
 }
