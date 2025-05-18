@@ -1,15 +1,16 @@
-version: '3.8'
-
 services:
   frontend:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "8082:8082"
     environment:
-      - NODE_ENV=development
-    volumes:
-      - .:/app
-      - /app/node_modules
-    command: pnpm dev  # Override the Dockerfile CMD for development 
+      - NODE_ENV=production
+      - VITE_API_URL=http://app:8081
+    networks:
+      - agentsofrevature-p2-backend_app-network
+
+networks:
+  agentsofrevature-p2-backend_app-network:
+    external: true 
