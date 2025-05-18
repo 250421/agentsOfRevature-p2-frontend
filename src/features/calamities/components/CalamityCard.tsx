@@ -13,20 +13,11 @@ import { cn } from "@/lib/utils";
 import type { Calamity } from "../models/calamity";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useNavigate } from "@tanstack/react-router";
-import { useDeleteCalamity } from "../hooks/useDeleteCalamity";
 
 const respondDialogProps = {
   title: "Are you absolutely sure?",
   description: "Choosing to accept this mission will begin the game.",
   confirmLabel: "Begin",
-};
-
-const ignoreDialogProps = {
-  title: "Are you really going to leave these people to their fate?",
-  description:
-    "Ignoring this calamity will remove it from your assignments. You will not be able to view it in the future. Perhaps another agent will save the day...",
-  confirmLabel: "Ignore",
-  destructive: true,
 };
 
 export function CalamityCard({
@@ -38,9 +29,7 @@ export function CalamityCard({
   reported,
 }: Calamity) {
   const [confirmRespondDialog, RespondDialogComponent] = useConfirm();
-  const [confirmIgnoreDialog, IgnoreDialogComponent] = useConfirm();
   const navigate = useNavigate();
-  const deleteCalamity = useDeleteCalamity();
 
   const handleConfirmRespond = async () => {
     const confirmed = await confirmRespondDialog();
@@ -50,18 +39,10 @@ export function CalamityCard({
     }
   };
 
-  const handleConfirmIgnore = async () => {
-    const confirmed = await confirmIgnoreDialog();
-
-    if (confirmed) {
-      deleteCalamity.mutate(id);
-    }
-  };
-
   return (
     <div className="min-w-min">
       <Card
-        className={cn("border-l-5", {
+        className={cn("border-0 border-l-5 bg-slate-800 text-slate-100", {
           "border-l-purple-700": severity === "CRITICAL",
           "border-l-red-600": severity === "HIGH",
           "border-l-orange-400": severity === "MEDIUM",
@@ -69,18 +50,18 @@ export function CalamityCard({
         })}
       >
         <CardHeader className="flex flex-row items-center">
-          <CardTitle className="mr-auto">{title}</CardTitle>
-          <p>{reported}</p>
+          <CardTitle className="mr-auto text-amber-300">{title}</CardTitle>
+          <p className="text-sm text-slate-400">{reported}</p>
         </CardHeader>
-        <Separator />
+        <Separator className="bg-slate-500"/>
         <CardContent className="flex flex-col gap-y-2">
           <p>
             <strong>Location: </strong>
-            {location}
+            <span className="text-sm text-slate-400">{location}</span>
           </p>
           <p>{description}</p>
         </CardContent>
-        <Separator />
+        <Separator className="bg-slate-500"/>
         <CardFooter className="flex flex-row gap-x-2">
           <SeverityBadge severity={severity}></SeverityBadge>
           <Button
@@ -90,10 +71,6 @@ export function CalamityCard({
             RESPOND
           </Button>
           <RespondDialogComponent {...respondDialogProps} />
-          <Button onClick={handleConfirmIgnore} className="bg-red-600">
-            IGNORE
-          </Button>
-          <IgnoreDialogComponent {...ignoreDialogProps} />
         </CardFooter>
       </Card>
     </div>

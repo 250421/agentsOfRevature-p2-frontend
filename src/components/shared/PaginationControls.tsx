@@ -16,10 +16,10 @@ export function PaginationControls({
 }: PaginationControlsProps) {
     return (
         <div>
-            <Button variant="outline" onClick={handlePrevPage} disabled={!canPrevPage}>
+            <Button className="text-slate-600" variant="outline" onClick={handlePrevPage} disabled={!canPrevPage}>
                 <StepBack />
             </Button>
-            <Button variant="outline" onClick={handleNextPage} disabled={!canNextPage}>
+            <Button className="text-slate-600" variant="outline" onClick={handleNextPage} disabled={!canNextPage}>
                 <StepForward />
             </Button>
         </div>

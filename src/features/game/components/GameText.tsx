@@ -8,7 +8,7 @@ interface GameTextProps {
 
 export function GameText({ gameText, chapter }: GameTextProps) {
   return (
-    <div className="min-w-min">
+    <div className="min-w-min bg-slate-800">
       <Card className="border mb-10">
         <CardHeader>
           <CardTitle className="flex justify-between text-md">

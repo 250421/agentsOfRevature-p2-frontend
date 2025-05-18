@@ -34,8 +34,9 @@ export function LeaderboardTable() {
   });
 
   return (
-    <Table className="table-fixed w-lg mx-auto">
-      <TableHeader>
+    <div className="bg-slate-800 border border-slate-600 rounded-sm overflow-hidden w-lg mx-auto shadow-sm shadow-blue-950">
+      <Table className="table-fixed">
+      <TableHeader className="bg-slate-700">
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
@@ -44,7 +45,7 @@ export function LeaderboardTable() {
                 onClick={header.column.getToggleSortingHandler()}
                 style={{ width: 'auto' }}
                 className={cn(
-                  "py-3 not-last:text-left font-semibold uppercase tracking-widest",
+                  "py-3 not-last:text-left font-semibold uppercase tracking-widest text-blue-400",
                   header.column.getCanSort() && "cursor-pointer",
                 )}
               >
@@ -82,5 +83,6 @@ export function LeaderboardTable() {
         )}
       </TableBody>
     </Table>
+    </div>
   );
 }

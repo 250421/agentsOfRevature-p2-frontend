@@ -13,17 +13,16 @@ function Index() {
   const { data: calamities, isLoading } = useGetCalamities();
   const username = useStore((state) => state.username);
 
-
   const pageHeaderProps = {
     primaryText: "Active Calamities",
     secondaryText:
-      `Greetings, agent ${username}. Choose your next assignment wisely.`,
+      `Greetings, agent ${username}. Choose your next assignment wisely.`
   };
 
   return (
     <div>
       <PageHeader {...pageHeaderProps} />
-      <hr></hr>
+      <hr className="border-slate-500"></hr>
       <CalamityContainer calamities={calamities} isLoading={isLoading}/>
     </div>
   );

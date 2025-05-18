@@ -42,52 +42,54 @@ function SignUpPage() {
   }
 
   return (
-    <Card className = "width-[400px]">
-      <CardHeader>
-        <CardTitle className = "font-bold text-2xl">Sign Up</CardTitle>
-        <CardDescription>Please fill in the details below:</CardDescription>
-      </CardHeader>
-      <CardContent>
+    <div className="container mx-auto max-w-xl">
+      <Card className="width-[400px] bg-slate-800 text-slate-100">
+        <CardHeader>
+          <CardTitle className="font-bold text-2xl">Sign Up</CardTitle>
+          <CardDescription>Please fill in the details below:</CardDescription>
+        </CardHeader>
+        <CardContent>
           <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-6">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Username" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-6">
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Username" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="Password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" style={{ color: "#FEFAE0", backgroundColor: "#283618" }}>Submit</Button>
-          </form>
-        </Form>
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="Password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button className='bg-blue-500' type="submit">Submit</Button>
+            </form>
+          </Form>
 
-        <div className="flex items-center gap-x-2 pt-4">
-          <p>Already have an account?</p>
-          <Link to={"/sign-in"} className="text-blue-500 underline">
+          <div className="flex items-center gap-x-2 pt-4">
+            <p>Already have an account?</p>
+            <Link to={"/sign-in"} className="text-blue-500 underline">
               Sign In
-          </Link>
-        </div>
-      </CardContent>
-    </Card>
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

@@ -134,11 +134,11 @@ export function RouteComponent() {
   }
 
   return (
-    <div className="container mx-auto py-10 space-y-4">
+    <div className="container mx-auto py-10 space-y-4 text-slate-100">
       
       <h1 className="text-2xl font-bold">Select 3 Heroes</h1>
 
-      <div className="text-sm text-gray-700">
+      <div className="text-sm text-slate-400">
         {selectedCount} hero{selectedCount === 1 ? '' : 'es'} selected
       </div>
 
@@ -160,14 +160,14 @@ export function RouteComponent() {
         <Button
           onClick={handleDeployClick}
           disabled={selectedCount !== 3}
-          className="ml-auto"
+          className="ml-auto bg-blue-400"
         >
           Deploy Heroes
         </Button>
       </div>
 
-      <table className="min-w-full border-collapse border">
-        <thead className="bg-gray-100">
+      <table className="min-w-full border-collapse border-slate-500">
+        <thead className="bg-slate-800">
           {table.getHeaderGroups().map(hg => (
             <tr key={hg.id}>
               {hg.headers.map(h => (
@@ -180,9 +180,9 @@ export function RouteComponent() {
             </tr>
           ))}
         </thead>
-        <tbody>
+        <tbody className='bg-slate-700'>
           {pageRows.map(row => (
-            <tr key={row.id} className="hover:bg-gray-50">
+            <tr key={row.id} className="hover:bg-slate-500">
               {row.getVisibleCells().map(cell => (
                 <td key={cell.id} className="p-2 border">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
