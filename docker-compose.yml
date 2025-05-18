@@ -3,14 +3,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL_FOR_BROWSER}
     ports:
       - "8082:8082"
-    environment:
-      - NODE_ENV=production
-      - VITE_API_URL=http://app:8081
     networks:
       - agentsofrevature-p2-backend_app-network
 
 networks:
   agentsofrevature-p2-backend_app-network:
-    external: true 
+    external: true

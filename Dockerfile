@@ -17,7 +17,7 @@ RUN pnpm install
 COPY . .
 
 # Build the application
-RUN pnpm build
+RUN VITE_API_URL=${VITE_API_URL} pnpm build
 
 # Production stage
 FROM node:18-alpine
