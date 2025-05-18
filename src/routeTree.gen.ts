@@ -21,6 +21,7 @@ import { Route as publicPublicSignUpImport } from './routes/(public)/_public.sig
 import { Route as publicPublicSignInImport } from './routes/(public)/_public.sign-in'
 import { Route as protectedProtectedLeaderboardImport } from './routes/(protected)/_protected.leaderboard'
 import { Route as protectedProtectedHeroselectImport } from './routes/(protected)/_protected.heroselect'
+import { Route as protectedProtectedGameresultsImport } from './routes/(protected)/_protected.gameresults'
 import { Route as protectedProtectedGameImport } from './routes/(protected)/_protected.game'
 
 // Create Virtual Routes
@@ -88,6 +89,13 @@ const protectedProtectedHeroselectRoute =
     getParentRoute: () => protectedProtectedRoute,
   } as any)
 
+const protectedProtectedGameresultsRoute =
+  protectedProtectedGameresultsImport.update({
+    id: '/gameresults',
+    path: '/gameresults',
+    getParentRoute: () => protectedProtectedRoute,
+  } as any)
+
 const protectedProtectedGameRoute = protectedProtectedGameImport.update({
   id: '/game',
   path: '/game',
@@ -140,6 +148,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof protectedProtectedGameImport
       parentRoute: typeof protectedProtectedImport
     }
+    '/(protected)/_protected/gameresults': {
+      id: '/(protected)/_protected/gameresults'
+      path: '/gameresults'
+      fullPath: '/gameresults'
+      preLoaderRoute: typeof protectedProtectedGameresultsImport
+      parentRoute: typeof protectedProtectedImport
+    }
     '/(protected)/_protected/heroselect': {
       id: '/(protected)/_protected/heroselect'
       path: '/heroselect'
@@ -182,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 interface protectedProtectedRouteChildren {
   protectedProtectedGameRoute: typeof protectedProtectedGameRoute
+  protectedProtectedGameresultsRoute: typeof protectedProtectedGameresultsRoute
   protectedProtectedHeroselectRoute: typeof protectedProtectedHeroselectRoute
   protectedProtectedLeaderboardRoute: typeof protectedProtectedLeaderboardRoute
   protectedProtectedIndexRoute: typeof protectedProtectedIndexRoute
@@ -189,6 +205,7 @@ interface protectedProtectedRouteChildren {
 
 const protectedProtectedRouteChildren: protectedProtectedRouteChildren = {
   protectedProtectedGameRoute: protectedProtectedGameRoute,
+  protectedProtectedGameresultsRoute: protectedProtectedGameresultsRoute,
   protectedProtectedHeroselectRoute: protectedProtectedHeroselectRoute,
   protectedProtectedLeaderboardRoute: protectedProtectedLeaderboardRoute,
   protectedProtectedIndexRoute: protectedProtectedIndexRoute,
@@ -240,6 +257,7 @@ export interface FileRoutesByFullPath {
   '/': typeof protectedProtectedIndexRoute
   '/profile': typeof protectedProfileRoute
   '/game': typeof protectedProtectedGameRoute
+  '/gameresults': typeof protectedProtectedGameresultsRoute
   '/heroselect': typeof protectedProtectedHeroselectRoute
   '/leaderboard': typeof protectedProtectedLeaderboardRoute
   '/sign-in': typeof publicPublicSignInRoute
@@ -250,6 +268,7 @@ export interface FileRoutesByTo {
   '/profile': typeof protectedProfileRoute
   '/': typeof protectedProtectedIndexRoute
   '/game': typeof protectedProtectedGameRoute
+  '/gameresults': typeof protectedProtectedGameresultsRoute
   '/heroselect': typeof protectedProtectedHeroselectRoute
   '/leaderboard': typeof protectedProtectedLeaderboardRoute
   '/sign-in': typeof publicPublicSignInRoute
@@ -264,6 +283,7 @@ export interface FileRoutesById {
   '/(public)': typeof publicRouteWithChildren
   '/(public)/_public': typeof publicPublicRouteWithChildren
   '/(protected)/_protected/game': typeof protectedProtectedGameRoute
+  '/(protected)/_protected/gameresults': typeof protectedProtectedGameresultsRoute
   '/(protected)/_protected/heroselect': typeof protectedProtectedHeroselectRoute
   '/(protected)/_protected/leaderboard': typeof protectedProtectedLeaderboardRoute
   '/(public)/_public/sign-in': typeof publicPublicSignInRoute
@@ -277,6 +297,7 @@ export interface FileRouteTypes {
     | '/'
     | '/profile'
     | '/game'
+    | '/gameresults'
     | '/heroselect'
     | '/leaderboard'
     | '/sign-in'
@@ -286,6 +307,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/'
     | '/game'
+    | '/gameresults'
     | '/heroselect'
     | '/leaderboard'
     | '/sign-in'
@@ -298,6 +320,7 @@ export interface FileRouteTypes {
     | '/(public)'
     | '/(public)/_public'
     | '/(protected)/_protected/game'
+    | '/(protected)/_protected/gameresults'
     | '/(protected)/_protected/heroselect'
     | '/(protected)/_protected/leaderboard'
     | '/(public)/_public/sign-in'
@@ -342,6 +365,7 @@ export const routeTree = rootRoute
       "parent": "/(protected)",
       "children": [
         "/(protected)/_protected/game",
+        "/(protected)/_protected/gameresults",
         "/(protected)/_protected/heroselect",
         "/(protected)/_protected/leaderboard",
         "/(protected)/_protected/"
@@ -367,6 +391,10 @@ export const routeTree = rootRoute
     },
     "/(protected)/_protected/game": {
       "filePath": "(protected)/_protected.game.tsx",
+      "parent": "/(protected)/_protected"
+    },
+    "/(protected)/_protected/gameresults": {
+      "filePath": "(protected)/_protected.gameresults.tsx",
       "parent": "/(protected)/_protected"
     },
     "/(protected)/_protected/heroselect": {
