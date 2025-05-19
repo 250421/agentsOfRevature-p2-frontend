@@ -80,7 +80,7 @@ function SignInPage() {
             </form>
         </Form>
 
-        <div className="flex items-center gap-x-2 pt-4 flex justify-center">
+        <div className="flex items-center gap-x-2 pt-4 justify-center">
             <p>Don&apos;t have an account?</p>
             <Link to={"/sign-up"} className="text-blue-500 underline">
                 Sign Up
