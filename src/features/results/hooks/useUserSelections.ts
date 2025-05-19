@@ -1,4 +1,4 @@
-import { useQuery, useQueries } from '@tanstack/react-query'
+import { useQueries } from '@tanstack/react-query'
 import { axiosInstance }    from '@/lib/axios-config'
 import type { Results } from '@/features/results/models/results'
 
