@@ -11,6 +11,5 @@ export const useGetCalamities = () => {
     return useQuery({
         queryKey: ['calamities'],
         queryFn: getCalamities,
-        retry: 2,
     })
 }

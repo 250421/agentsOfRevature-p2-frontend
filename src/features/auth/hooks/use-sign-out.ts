@@ -15,9 +15,7 @@ export const useSignOut = () => {
             return resp.data;
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ["auth"],
-            });
+            queryClient.resetQueries({ queryKey: ["auth"] });
             setState({ loggedIn: false, username: '' });
             toast.success("Logged out successfully");
             navigate({ to: "/sign-in" });
