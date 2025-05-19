@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { useSignOut } from '@/features/auth/hooks/use-sign-out'
 import { useConfirm } from '@/hooks/use-confirm'
 import { useUserResults } from '@/features/results/hooks/useUserResults'
+import { useUserSelections } from '@/features/results/hooks/useUserSelections'
 
 export const Route = createFileRoute('/(protected)/_protected/profile')({
   component: ProfilePage,
@@ -38,13 +39,34 @@ function ProfilePage() {
     const { data: results = [], isLoading: resultsLoading } =
     useUserResults(user.id)
 
-    if (resultsLoading) return <div>Loading your stats…</div>
+    const {
+            data: selections,
+            isLoading: selLoading,
+    } = useUserSelections(results)
+
+    if (resultsLoading || selLoading) return <div>Loading your stats…</div>
 
     const totalPrestige = results.reduce((sum, r) => sum + r.repGained, 0)
     const calamitiesResolved = results.filter((r) => r.didWin).length
     const calamitiesFailed = results.filter((r) => !r.didWin).length
     const totalCalamities = calamitiesResolved + calamitiesFailed
-    const resolutionRate = (Math.round((calamitiesResolved/totalCalamities) * 100)).toFixed(2)
+    let resolutionRate = 0.00;
+    if (totalCalamities != 0) { // to avoid NaN
+        resolutionRate = (Math.round((calamitiesResolved / totalCalamities) * 100)).toFixed(2) as unknown as number;
+    } 
+
+    const freqMap = new Map<string, number>()
+    selections?.forEach(s => {
+        [s.hero1, s.hero2, s.hero3].forEach(name => {
+        freqMap.set(name, (freqMap.get(name) ?? 0) + 1)
+        })
+    })
+
+    // sort by descending frequency, take top 3
+    const top3 = Array.from(freqMap.entries())
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3)
+        .map(([name]) => name)
 
     return (
         <>
@@ -73,21 +95,20 @@ function ProfilePage() {
 
         <Card className="w-1/2">
             <CardHeader>
-                <CardTitle>Your Favorite Heroes</CardTitle>
+                <CardTitle>Your Top 3 Heroes</CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-col md:flex-row gap-6 text-center px-4 py-2">
-                <Card className="w-max whitespace-nowrap text-center px-4 py-2">
-                    <CardHeader><CardTitle>Hero 1</CardTitle></CardHeader>
-                    <CardContent><p>Statistics</p></CardContent>
-                </Card>
-                <Card className="w-max whitespace-nowrap text-center px-4 py-2">
-                    <CardHeader><CardTitle>Hero 2</CardTitle></CardHeader>
-                    <CardContent><p>Statistics</p></CardContent>
-                </Card>
-                <Card className="w-max whitespace-nowrap text-center px-4 py-2">
-                    <CardHeader><CardTitle>Hero 3</CardTitle></CardHeader>
-                    <CardContent><p>Statistics</p></CardContent>
-                </Card>
+            <CardContent>
+            {top3.length ? (
+                <ol className="list-decimal list-inside space-y-1">
+                {top3.map(name => (
+                    <li key={name} className="font-medium">{name}</li>
+                ))}
+                </ol>
+            ) : (
+                <p className="text-sm text-gray-600">
+                You haven’t deployed any heroes yet.
+                </p>
+            )}
             </CardContent>
         </Card>
 

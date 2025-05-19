@@ -82,7 +82,7 @@ function SignUpPage() {
           </form>
         </Form>
 
-        <div className="flex items-center gap-x-2 pt-4 flex justify-center">
+        <div className="flex items-center gap-x-2 pt-4 justify-center">
           <p>Already have an account?</p>
           <Link to={"/sign-in"} className="text-blue-500 underline">
               Sign In
