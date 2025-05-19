@@ -14,6 +14,36 @@ export default defineConfig(({ mode }) => {
       viteReact(),
       tailwindcss(),
     ],
+    test: {
+      environment: 'jsdom',
+      setupFiles: ['./src/setupTests.ts'],
+      globals: true,
+      css: false,
+      watch: false,
+      coverage: {
+        provider: 'v8',
+        reporter: ['text', 'json', 'html'],
+        reportsDirectory: './coverage', // Where the reports will be saved
+        exclude: [
+          'node_modules/',
+          'src/main.tsx',
+          'src/components/ui/**',
+          'src/lib/utils.ts',
+          '**/*.d.ts',
+          '**/routeTree.gen.ts',
+          '**/models/**'
+        ],
+        include: [
+          'src/**/*.{ts,tsx}',
+        ],
+        thresholds: {
+          statements: 80,
+          branches: 80,
+          functions: 80,
+          lines: 80,
+        },
+      },
+    },
     resolve: {
       alias: {
         "@": resolve(__dirname, "./src"),

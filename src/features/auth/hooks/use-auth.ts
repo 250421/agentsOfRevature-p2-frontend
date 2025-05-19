@@ -14,8 +14,8 @@ export const useAuth = () => {
             } catch (error) {
                 setState({ loggedIn: false, username: '' });
                 console.error(error);
-                return null;
+                throw error;
             }
-        }
+        },
     })
 }

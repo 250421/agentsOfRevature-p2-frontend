@@ -1,22 +1,14 @@
 import { createFileRoute, Navigate, Outlet } from "@tanstack/react-router";
-import { useAuth } from "@/features/auth/hooks/use-auth";
-import { Loader2 } from "lucide-react";
+import useStore from "@/store";
 
 export const Route = createFileRoute("/(public)/_public")({
   component: PublicLayout,
 });
 
 function PublicLayout() {
-  const { data: user, isLoading } = useAuth();
+  const loggedIn = useStore((state) => state.loggedIn);
 
-  if (isLoading)
-    return (
-      <div className="flex items-center justify-center">
-        <Loader2 className="animate-spin" />
-      </div>
-    );
-
-  if (user) {
+  if (loggedIn) {
     return <Navigate to="/" />;
   }
 
