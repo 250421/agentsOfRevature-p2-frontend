@@ -44,7 +44,10 @@ function ProfilePage() {
     const calamitiesResolved = results.filter((r) => r.didWin).length
     const calamitiesFailed = results.filter((r) => !r.didWin).length
     const totalCalamities = calamitiesResolved + calamitiesFailed
-    const resolutionRate = (Math.round((calamitiesResolved/totalCalamities) * 100)).toFixed(2)
+    let resolutionRate = 0.00;
+    if (totalCalamities != 0) { // to avoid NaN
+        resolutionRate = (Math.round((calamitiesResolved / totalCalamities) * 100)).toFixed(2) as unknown as number;
+    } 
 
     return (
         <>
