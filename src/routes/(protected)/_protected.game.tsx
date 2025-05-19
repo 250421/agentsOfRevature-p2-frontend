@@ -18,6 +18,11 @@ function RouteComponent() {
   const optionSelected = useOptionSelected();
   const navigate = useNavigate();
 
+  if (scenario === undefined) {
+    navigate({ to: '/' });
+    return <TransitionScreen text="No active game found. Going back to main screen." />;
+  }
+
   if (scenarioIsLoading) {
     return (
       <div className="flex items-center justify-center h-screen">

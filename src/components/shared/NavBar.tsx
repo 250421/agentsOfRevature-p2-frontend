@@ -26,7 +26,7 @@ export function NavBar() {
   };
 
   return (
-    <header className="p-3 mb-10 border-b">
+    <header className="p-3 mb-10 bg-slate-800 border-b-3 border-blue-400 text-slate-100">
       <div className="flex justify-between items-center">
         <div className="text-3xl font-bold w-[500px]">AGENTS OF REVATURE</div>
 
